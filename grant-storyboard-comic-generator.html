@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grant Writing Storyboard Comic Generator • Interactive Visual Story</title>
+  
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- html2canvas for PNG export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <!-- jsPDF for PDF export -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  
+  <!-- Styles -->
+  <style>
+    :root {
+      --bg: #121316;
+      --surface: #1b1e24;
+      --primary: #0b5ed7;
+      --primary-dark: #084298;
+      --text: #e9eefb;
+      --muted: #b7c0d1;
+      --radius: 10px;
+      --shadow: 0 6px 18px rgba(0,0,0,.45);
+      --comic-border: #000000;
+      --panel-bg: #ffffff;
+      --speech-bubble: #ffffcc;
+    }
+
+    @media print {
+      body { background: white !important; }
+      .no-print { display: none !important; }
+      .comic-page { page-break-after: always; }
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrapper { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      padding: 3rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.35); }
+
+    /* Comic Book Styles */
+    .comic-page { background: var(--panel-bg); border: 4px solid var(--comic-border); border-radius: var(--radius); padding: 2rem; margin-bottom: 3rem; box-shadow: 0 10px 26px rgba(0,0,0,0.5); }
+    .comic-grid { display: grid; gap: 1.5rem; margin-bottom: 2rem; }
+    .comic-grid-2 { grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); }
+    .comic-grid-3 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+
+    .comic-panel { background: #fafafa; border: 3px solid var(--comic-border); border-radius: 12px; overflow: hidden; position: relative; box-shadow: 4px 4px 10px rgba(0,0,0,0.25); transition: transform 0.2s; }
+    .comic-panel:hover { transform: scale(1.02); box-shadow: 6px 6px 18px rgba(0,0,0,0.3); }
+
+    .panel-header { background: var(--primary); color: white; padding: 0.75rem; font-weight: 800; font-size: 1.05rem; border-bottom: 2px solid var(--comic-border); }
+    .panel-image { width: 100%; height: 300px; background: #e0e5ee; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+    .panel-image img { width: 100%; height: 100%; object-fit: cover; }
+    .panel-image.loading::after { content: "🎨 Generating..."; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5rem; color: var(--primary); animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+
+    .panel-content { padding: 1.5rem; background: white; }
+    .panel-title { font-size: 1.2rem; font-weight: 900; color: var(--comic-border); margin-bottom: 0.5rem; text-transform: uppercase; }
+    .panel-description { font-size: 0.97rem; color: #222; line-height: 1.55; margin-bottom: 1rem; }
+
+    .speech-bubble { background: black; border: 2px solid var(--comic-border); border-radius: 20px; padding: 1rem; position: relative; margin-bottom: 1rem; font-style: italic; }
+    .speech-bubble::after { content: ""; position: absolute; bottom: -10px; left: 30px; width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 10px solid var(--comic-border); }
+
+    .controls { background: var(--surface); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow); }
+    .btn-generate { background: var(--primary); color: white; border: none; padding: 1rem 2rem; border-radius: var(--radius); font-size: 1.05rem; font-weight: bold; cursor: pointer; transition: all 0.2s; text-transform: uppercase; }
+    .btn-generate:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 6px 14px rgba(11,94,215,0.4); }
+    .api-key-input { background: #101217; border: 2px solid #2b3240; border-radius: var(--radius); padding: 0.75rem; color: white; width: 100%; margin-bottom: 1rem; }
+
+    .chapter-title { font-size: 2.5rem; text-align: center; color: var(--comic-border); margin: 2rem 0; text-transform: uppercase; font-weight: 900; text-shadow: 3px 3px 0px rgba(11,94,215,0.25); }
+    .page-number { text-align: center; font-size: 1.1rem; color: #666; margin-top: 1rem; }
+
+    .error-message { background: #ff4444; color: white; padding: 1rem; border-radius: var(--radius); margin: 1rem 0; display: none; }
+    .success-message { background: #44ff9f; color: black; padding: 1rem; border-radius: var(--radius); margin: 1rem 0; display: none; }
+
+    /* Loading Overlay */
+    .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: none; align-items: center; justify-content: center; z-index: 9999; }
+    .loading-content { text-align: center; color: white; }
+    .spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid var(--primary); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 1rem; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .comic-grid-2, .comic-grid-3 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <h3>Generating Your Grant Storyboard...</h3>
+      <p id="loadingStatus">Preparing panels...</p>
+    </div>
+  </div>
+
+  <article class="wrapper">
+    <!-- HERO -->
+    <header class="hero no-print">
+      <h1>🎨 Grant Writing Storyboard Comic Generator</h1>
+      <p>Turn the Lead Grant Writing Team's pipeline into a compelling visual narrative—from scouting to submission to stewardship</p>
+    </header>
+
+    <!-- CONTROLS -->
+    <div class="controls no-print">
+      <h3 style="color: var(--text); margin-bottom: 1rem;">🔑 OpenAI Configuration</h3>
+      <input type="password" class="api-key-input" id="apiKey" placeholder="Enter your OpenAI API Key (starts with sk-...)" />
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <button class="btn-generate" onclick="generateDailyComics()">Generate Daily Workflow</button>
+        <button class="btn-generate" onclick="generateWeeklyComics()">Generate Weekly Workflow</button>
+        <button class="btn-generate" onclick="generateMonthlyComics()">Generate Monthly Journey</button>
+        <button class="btn-generate" onclick="generateAllComics()">Generate Complete Story</button>
+        <button class="btn-generate" id="savePngBtn">Save PNG(s)</button>
+        <button class="btn-generate" id="savePdfBtn">Save PDF</button>
+        <a class="btn-generate" href="grant-storyboard-comic-display.html" style="text-decoration:none; text-align:center;">View Comic Display</a>
+        <a class="btn-generate" href="grant-workflow-storyboard-frames.html" style="text-decoration:none; text-align:center;">Open Workflow Frames</a>
+      </div>
+      <div class="error-message" id="errorMessage"></div>
+      <div class="success-message" id="successMessage"></div>
+    </div>
+
+    <!-- COMIC PAGES CONTAINER -->
+    <div id="comicContainer"></div>
+  </article>
+
+  <!-- JavaScript -->
+  <script>
+    // Storyboard frame data for Grant Writing Team
+    const storyboardFrames = {
+      daily: [
+        {
+          id: "D-01",
+          title: "Morning Funding Landscape Review",
+          description: "Dashboard scan of new RFPs, deadline shifts, and eligibility flags across government, foundation, and corporate sources",
+          prompt: "Lead grant writer at dual-monitor workstation scanning a sophisticated grants dashboard: deadline heatmap, opportunity scoring widgets, eligibility flags, portfolio status. Notes with priority codes, coffee mug, sunrise lighting, crisp professional aesthetic, photorealistic"
+        },
+        {
+          id: "D-02",
+          title: "Opportunity Scouting & Fit Analysis",
+          description: "Side-by-side review of RFP PDF, eligibility matrix, past awardees, and scoring rubric to produce go/no-go",
+          prompt: "Close-up desk scene: printed RFP with highlights, laptop showing eligibility matrix, tablet displaying past awardees list and score rubric. Sticky notes with risk/benefit, calm analytical vibe, detailed photorealistic style"
+        },
+        {
+          id: "D-03",
+          title: "Narrative Architecture Workshop",
+          description: "Strategy session aligning problem statement, logic model, outcomes, and KPIs with funder rubric",
+          prompt: "Hybrid strategy meeting: diverse team around digital whiteboard showing logic model arrows (inputs→activities→outputs→outcomes), outcome KPIs, equity framing. Conference room with modern glass walls, collaborative energy, photorealistic"
+        },
+        {
+          id: "D-04",
+          title: "Budget Modeling & Compliance",
+          description: "Spreadsheet and cost narrative alignment with allowability checks, match/in-kind documentation, and indirect caps",
+          prompt: "Finance workstation: spreadsheet columns for personnel, materials, logistics, evaluation; adjacent document with budget narrative. Compliance checklist (allowability, procurement, indirect cap). Calculator, policy binder tabs, focused lighting, photorealistic"
+        },
+        {
+          id: "D-05",
+          title: "Partner Letters & MOUs",
+          description: "Coordinating signatories, letters of support, and scopes with equity-centered messaging",
+          prompt: "CRM-like screen showing partner list (schools, libraries, youth orgs), letter status indicators, template letter preview with signatures. Email windows, calendar invites, color-coded statuses, collaborative environment, photorealistic"
+        },
+        {
+          id: "D-06",
+          title: "End-of-Day Progress & Risk Review",
+          description: "Checklist update for section completeness, risk log, and portal readiness for upcoming submissions",
+          prompt: "Night desk scene: progress board with sections (abstract, need, project, evaluation, budget, attachments) marked 0–100%, risk log highlighting missing documents, portal test screenshot. Warm desk lamp glow, tidy workspace, photorealistic"
+        }
+      ],
+      weekly: [
+        {
+          id: "W-01",
+          title: "Pipeline Triage Monday",
+          description: "Kanban swimlanes for discovery→drafting→red-team→gold-team→submission, with resource assignments",
+          prompt: "Team stand-up: wall-sized kanban board with color-coded cards, deadline heatmap, avatars for owners. People discussing priorities, dynamic but organized, high-energy office, photorealistic"
+        },
+        {
+          id: "W-02",
+          title: "Research Deep-Dive Tuesday",
+          description: "Evidence catalog of need data, literature, prior evaluations, and quotes tagged by section",
+          prompt: "Research lab ambiance: multi-monitor setup with data dashboards (equity metrics, attendance maps), citation manager open, PDF annotations, sticky tabs with quotes. Quiet analytical mood, photorealistic"
+        },
+        {
+          id: "W-03",
+          title: "Writing Sprint Wednesday",
+          description: "Timed drafting blocks with readability, character limits, and rubric alignment checks",
+          prompt: "Focused writing sprint: timer app visible, text editor with tracked changes, margin comments resolving clarity and equity tone; side panel shows character counter and rubric checklist. Determined concentration, photorealistic"
+        },
+        {
+          id: "W-04",
+          title: "Finance & Compliance Thursday",
+          description: "Budget congruence, allowability review, attachments audit (SAM/UEI, resumes, board roster)",
+          prompt: "Roundtable with finance and compliance leads: big screen checklist with green checks, budget deltas highlighted in red, insurance and registration docs in a folder stack. Professional conference room, photorealistic"
+        },
+        {
+          id: "W-05",
+          title: "Submission Rehearsal Friday",
+          description: "Portal dry-run verifying sequence, naming conventions, and PDF validation",
+          prompt: "Laptop showing a grants portal form with character limits, upload dialogs with correct file names, validation success popups; teammate watching and checking off a printed rehearsal checklist. Clean, detailed, photorealistic"
+        },
+        {
+          id: "W-06",
+          title: "Weekend Metrics & Playbook",
+          description: "Throughput, reviewer score trends, and knowledge capture for the team playbook",
+          prompt: "Weekend home office: analytics dashboard with win-rate trendline, section-level quality scores heatmap; notebook open with lessons learned and template updates. Cozy natural light, photorealistic"
+        }
+      ],
+      monthly: [
+        {
+          id: "M-01",
+          title: "Foundation Building (Months 1–4)",
+          description: "Associate writer mastering eligibility, narrative basics, and attachments",
+          prompt: "Training room: mentor guiding junior writer, screens with eligibility flowchart and narrative outline; binder of attachment templates; encouraging learning atmosphere, photorealistic"
+        },
+        {
+          id: "M-02",
+          title: "Advanced Development (Months 5–8)",
+          description: "Senior writer owning sections, running red-team cycles, coordinating partners",
+          prompt: "Senior writer leading review: tracked changes on large monitor, rubric score simulation on side screen, video call with partner confirming letter text; confident leadership, photorealistic"
+        },
+        {
+          id: "M-03",
+          title: "Leadership Preparation (Months 9–12)",
+          description: "Lead writer orchestrating multi-partner submission calendar and risk retirement",
+          prompt: "War-room style planning: dependency map on wall, calendar with multiple deadlines, risk burn-down chart; executive review in progress, poised leadership, photorealistic"
+        },
+        {
+          id: "M-04",
+          title: "Executive Development (Months 13–18)",
+          description: "Director of Grants managing portfolio mix, cultivation, renewals, and reporting",
+          prompt: "Executive boardroom: portfolio dashboard with source mix pie chart, multi-year awards timeline, stewardship cadence calendar; confident presentation stance, photorealistic"
+        }
+      ]
+    };
+
+    // OpenAI API integration
+    async function generateImage(prompt) {
+      const apiKey = document.getElementById('apiKey').value;
+      if (!apiKey) { throw new Error('Please enter your OpenAI API key'); }
+
+      const response = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+        body: JSON.stringify({ model: 'dall-e-3', prompt, n: 1, size: '1024x1024', quality: 'standard', style: 'natural', response_format: 'b64_json' })
+      });
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error?.message || 'Failed to generate image');
+      }
+      const data = await response.json();
+      const b64 = data.data?.[0]?.b64_json;
+      if (!b64) throw new Error('No image returned');
+      return `data:image/png;base64,${b64}`;
+    }
+
+    // Comic generation helpers
+    function createComicPanel(frame, imageUrl = null) {
+      const panel = document.createElement('div');
+      panel.className = 'comic-panel';
+      panel.innerHTML = `
+        <div class="panel-header">${frame.id}</div>
+        <div class="panel-image ${!imageUrl ? 'loading' : ''}" id="image-${frame.id}">
+          ${imageUrl ? `<img src="${imageUrl}" alt="${frame.title}">` : ''}
+        </div>
+        <div class="panel-content">
+          <div class="panel-title">${frame.title}</div>
+          <div class="panel-description">${frame.description}</div>
+          <div class="speech-bubble">"${panelQuote(frame.id)}"</div>
+        </div>
+      `;
+      return panel;
+    }
+
+    function panelQuote(id) {
+      const quotes = {
+        'D-01': 'Two high-fit funders surfaced—time to mobilize.',
+        'D-02': 'Eligibility: check. Competitiveness: strong. Proceed.',
+        'D-03': 'Tie KPIs to rubric—make impact measurable and clear.',
+        'D-04': 'Align every dollar with narrative logic and policy.',
+        'D-05': 'Partners aligned—letters queued for signature.',
+        'D-06': 'All sections ≥80%. Portal rehearsal next.',
+        'W-01': 'Move NOFO-27 to red-team; assign reviewers.',
+        'W-02': 'Evidence tiles tagged—need statement levels up.',
+        'W-03': 'Trim 120 characters—now perfectly within limit.',
+        'W-04': 'Compliance greenlit. Attachments verified.',
+        'W-05': 'Naming convention validated. Sequence confirmed.',
+        'W-06': 'Win-rate trending up—publish playbook updates.',
+        'M-01': 'First submission support—skills compounding.',
+        'M-02': 'Red-team caught the ambiguity—fixed and stronger.',
+        'M-03': 'Three complex proposals tracking green.',
+        'M-04': 'Multi-year award secured—stewardship in motion.'
+      };
+      return quotes[id] || 'Grant excellence through clarity, evidence, and compliance.';
+    }
+
+    function createComicPage(title, frames, columns = 3) {
+      const page = document.createElement('div');
+      page.className = 'comic-page';
+      page.innerHTML = `
+        <h2 class="chapter-title">${title}</h2>
+        <div class="comic-grid comic-grid-${columns}" id="grid-${title.replace(/\s+/g, '-')}"></div>
+        <div class="page-number">Page ${document.querySelectorAll('.comic-page').length + 1}</div>
+      `;
+      return page;
+    }
+
+    async function generateComicSet(frames, title, columns = 3) {
+      const container = document.getElementById('comicContainer');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      const loadingStatus = document.getElementById('loadingStatus');
+      const errorMessage = document.getElementById('errorMessage');
+      const successMessage = document.getElementById('successMessage');
+
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      try {
+        loadingOverlay.style.display = 'flex';
+
+        const page = createComicPage(title, frames, columns);
+        container.appendChild(page);
+        const grid = page.querySelector('.comic-grid');
+
+        for (const frame of frames) { grid.appendChild(createComicPanel(frame)); }
+
+        for (let i = 0; i < frames.length; i++) {
+          const frame = frames[i];
+          loadingStatus.textContent = `Generating image ${i + 1} of ${frames.length}: ${frame.title}`;
+          try {
+            const imageUrl = await generateImage(frame.prompt);
+            const imageContainer = document.getElementById(`image-${frame.id}`);
+            imageContainer.classList.remove('loading');
+            imageContainer.innerHTML = `<img crossorigin="anonymous" src="${imageUrl}" alt="${frame.title}">`;
+          } catch (err) {
+            console.error(`Image error for ${frame.id}`, err);
+            const imageContainer = document.getElementById(`image-${frame.id}`);
+            imageContainer.classList.remove('loading');
+            imageContainer.innerHTML = `<div style="padding: 2rem; text-align: center; color: #666;">Image generation failed</div>`;
+          }
+        }
+
+        successMessage.textContent = `Successfully generated ${frames.length} comic panels!`;
+        successMessage.style.display = 'block';
+      } catch (error) {
+        errorMessage.textContent = `Error: ${error.message}`;
+        errorMessage.style.display = 'block';
+      } finally {
+        loadingOverlay.style.display = 'none';
+      }
+    }
+
+    // Button handlers
+    async function generateDailyComics() {
+      document.getElementById('comicContainer').innerHTML = '';
+      await generateComicSet(storyboardFrames.daily, 'Daily Workflow Adventures', 3);
+    }
+    async function generateWeeklyComics() {
+      document.getElementById('comicContainer').innerHTML = '';
+      await generateComicSet(storyboardFrames.weekly, 'Weekly Strategic Journey', 3);
+    }
+    async function generateMonthlyComics() {
+      document.getElementById('comicContainer').innerHTML = '';
+      await generateComicSet(storyboardFrames.monthly, 'Monthly Role Evolution', 2);
+    }
+    async function generateAllComics() {
+      document.getElementById('comicContainer').innerHTML = '';
+      await generateComicSet(storyboardFrames.daily, 'Daily Workflow Adventures', 3);
+      await generateComicSet(storyboardFrames.weekly, 'Weekly Strategic Journey', 3);
+      await generateComicSet(storyboardFrames.monthly, 'Monthly Role Evolution', 2);
+    }
+
+    // Print shortcut
+    window.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'p') { e.preventDefault(); window.print(); }
+    });
+
+    // Export the generated storyboard as PNG pages
+    async function saveStoryboardAsPNGs(rootSelector, baseName = 'grant-storyboard') {
+      const root = document.querySelector(rootSelector);
+      if (!root) return;
+      await new Promise(r => setTimeout(r, 100));
+      const canvas = await html2canvas(root, { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: root.scrollWidth, windowHeight: root.scrollHeight });
+      const pageWidth = canvas.width;
+      const pageHeight = Math.floor(pageWidth * 1.414); // A4 portrait
+      let offsetY = 0;
+      let pageIndex = 1;
+      while (offsetY < canvas.height) {
+        const sliceHeight = Math.min(pageHeight, canvas.height - offsetY);
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = pageWidth;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, offsetY, pageWidth, sliceHeight, 0, 0, pageWidth, sliceHeight);
+        const url = pageCanvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${baseName}-page-${String(pageIndex).padStart(2,'0')}.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        pageIndex += 1;
+        offsetY += sliceHeight;
+      }
+    }
+
+    document.getElementById('savePngBtn').addEventListener('click', () => {
+      // Export only the generated comics area for cleanliness
+      saveStoryboardAsPNGs('#comicContainer');
+    });
+
+    // Save as PDF (A4 portrait)
+    document.getElementById('savePdfBtn').addEventListener('click', async () => {
+      const rootSelector = '#comicContainer';
+      const root = document.querySelector(rootSelector);
+      if (!root) return;
+      await new Promise(r => setTimeout(r, 100));
+      const canvas = await html2canvas(root, { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: root.scrollWidth, windowHeight: root.scrollHeight });
+      const imgData = canvas.toDataURL('image/png');
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+      const pageWidth = 210; // mm
+      const pageHeight = 297; // mm
+      // compute pixel to mm ratio
+      const pxPerMm = canvas.width / pageWidth;
+      const pageCanvasHeightPx = Math.floor(pageHeight * pxPerMm);
+      let offsetY = 0;
+      let isFirst = true;
+      while (offsetY < canvas.height) {
+        const sliceHeight = Math.min(pageCanvasHeightPx, canvas.height - offsetY);
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = canvas.width;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, offsetY, canvas.width, sliceHeight, 0, 0, canvas.width, sliceHeight);
+        const pageImg = pageCanvas.toDataURL('image/png');
+        if (!isFirst) pdf.addPage();
+        pdf.addImage(pageImg, 'PNG', 0, 0, pageWidth, (sliceHeight / pxPerMm));
+        isFirst = false;
+        offsetY += sliceHeight;
+      }
+      pdf.save('grant-storyboard.pdf');
+    });
+  </script>
+</body>
+</html>
+
+

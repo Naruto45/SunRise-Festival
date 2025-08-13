@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Grant Writing Storyboard Comic Display • Visual Workflow Story</title>
+  
+  <!-- Bootstrap 5 CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- html2canvas for PNG export -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  
+  <!-- Styles -->
+  <style>
+    :root {
+      --bg: #f5f5f5;
+      --surface: #ffffff;
+      --primary: #0b5ed7;
+      --primary-dark: #084298;
+      --text: #333333;
+      --muted: #666666;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(0,0,0,.1);
+      --comic-border: #000000;
+      --panel-bg: #ffffff;
+      --speech-bubble: #ffffcc;
+      --action-line: #ff4444;
+    }
+
+    @media print {
+      body { background: white !important; }
+      .no-print { display: none !important; }
+      .comic-page { page-break-after: always; }
+      .comic-panel { break-inside: avoid; }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .wrapper { max-width: 1400px; margin: 0 auto; padding: 2rem; }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: var(--radius);
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow);
+    }
+    .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+    .hero p { font-size: 1.25rem; opacity: 0.95; max-width: 900px; margin: 0 auto; }
+
+    /* Section Headers */
+    .comic-section { margin-bottom: 4rem; }
+    .section-header { text-align: center; margin-bottom: 3rem; }
+    .section-title {
+      font-size: 2.5rem; font-weight: 800; color: var(--primary-dark);
+      margin-bottom: 0.5rem; position: relative; display: inline-block;
+    }
+    .section-title::before, .section-title::after {
+      content: "★"; position: absolute; top: 50%; transform: translateY(-50%);
+      color: var(--primary); font-size: 1.5rem;
+    }
+    .section-title::before { left: -2rem; }
+    .section-title::after { right: -2rem; }
+    .section-subtitle { color: var(--muted); font-size: 1.1rem; }
+
+    /* Comic Grid */
+    .comic-grid { display: grid; gap: 2rem; margin-bottom: 2rem; }
+    .comic-grid-2 { grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); }
+    .comic-grid-3 { grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); }
+
+    /* Comic Panels */
+    .comic-panel {
+      background: var(--panel-bg);
+      border: 4px solid var(--comic-border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      transform: rotate(-0.5deg);
+    }
+    .comic-panel:nth-child(even) { transform: rotate(0.5deg); }
+    .comic-panel:hover { transform: rotate(0deg) scale(1.02); box-shadow: 12px 12px 0px rgba(0,0,0,0.15); z-index: 10; }
+
+    .panel-number {
+      position: absolute; top: 10px; left: 10px; background: var(--primary);
+      color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-weight: bold; font-size: 0.9rem; z-index: 2; box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .panel-image { width: 100%; height: 280px; background: linear-gradient(135deg, #e0e0e0 0%, #f0f0f0 100%); position: relative; overflow: hidden; border-bottom: 3px solid var(--comic-border); }
+    .image-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: linear-gradient(45deg, #f0f0f0 25%, #e8e8e8 25%, #e8e8e8 50%, #f0f0f0 50%, #f0f0f0 75%, #e8e8e8 75%, #e8e8e8);
+      background-size: 20px 20px; animation: slide 1s linear infinite;
+    }
+    @keyframes slide { 0% { background-position: 0 0; } 100% { background-position: 20px 0; } }
+    .placeholder-icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.3; }
+    .placeholder-text { color: var(--muted); font-style: italic; text-align: center; padding: 0 2rem; }
+
+    .action-lines { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+    .comic-panel:hover .action-lines { opacity: 1; }
+    .action-line { position: absolute; background: var(--action-line); transform-origin: center; }
+    .action-line-1 { width: 2px; height: 100%; left: 10%; transform: rotate(15deg); }
+    .action-line-2 { width: 2px; height: 100%; right: 10%; transform: rotate(-15deg); }
+    .action-line-3 { width: 100%; height: 2px; top: 20%; transform: rotate(5deg); }
+
+    .panel-content { padding: 1.5rem; background: white; }
+    .panel-title { font-size: 1.3rem; font-weight: 800; color: var(--comic-border); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+    .panel-description { font-size: 0.95rem; color: var(--text); line-height: 1.6; margin-bottom: 1rem; }
+
+    .speech-bubble {
+      background: var(--speech-bubble); border: 3px solid var(--comic-border); border-radius: 20px; padding: 1rem 1.25rem;
+      position: relative; margin-top: 1rem; font-style: italic; font-weight: 600; box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+    }
+    .speech-bubble::after { content: ""; position: absolute; bottom: -15px; left: 40px; width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 15px solid var(--comic-border); }
+    .speech-bubble::before { content: ""; position: absolute; bottom: -11px; left: 43px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 12px solid var(--speech-bubble); z-index: 1; }
+
+    .pow-effect {
+      position: absolute; top: -20px; right: -20px; background: #ffcc00; color: var(--comic-border);
+      padding: 0.5rem 1rem; border: 3px solid var(--comic-border); border-radius: 50%; font-weight: 900; font-size: 1.2rem; transform: rotate(15deg); box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    }
+
+    .page-nav { text-align: center; margin: 3rem 0; padding: 2rem; background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .nav-btn { display: inline-block; background: var(--primary); color: white; padding: 0.75rem 2rem; border-radius: 30px; text-decoration: none; font-weight: 600; margin: 0 0.5rem; transition: all 0.3s; box-shadow: 4px 4px 0px rgba(0,0,0,0.1); }
+    .nav-btn:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 6px 6px 0px rgba(0,0,0,0.15); color: white; }
+
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .section-title { font-size: 1.8rem; }
+      .comic-grid-2, .comic-grid-3 { grid-template-columns: 1fr; }
+      .panel-image { height: 220px; }
+    }
+
+    @media print {
+      .comic-panel { box-shadow: none !important; transform: none !important; page-break-inside: avoid; }
+      .action-lines { display: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <article class="wrapper">
+    <!-- HERO -->
+    <header class="hero no-print">
+      <h1>🎨 Grant Writing Storyboard Comic Display</h1>
+      <p>A visual journey through the daily, weekly, and monthly workflows of a Lead Grant Writing Team delivering funder-ready proposals from discovery through stewardship</p>
+    </header>
+
+    <!-- DAILY WORKFLOW SECTION -->
+    <section class="comic-section">
+      <div class="section-header">
+        <h2 class="section-title">Daily Workflow Adventures</h2>
+        <p class="section-subtitle">Walk through each discipline that keeps the grant pipeline healthy and on time</p>
+      </div>
+
+      <div class="comic-grid comic-grid-3">
+        <!-- Panel 1 -->
+        <div class="comic-panel">
+          <div class="panel-number">D-01</div>
+          <div class="pow-effect">SCAN!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🗂️</div>
+              <div class="placeholder-text">Morning funding landscape review with deadline heatmap and eligibility flags</div>
+            </div>
+            <div class="action-lines">
+              <div class="action-line action-line-1"></div>
+              <div class="action-line action-line-2"></div>
+              <div class="action-line action-line-3"></div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Funding Landscape Review</h3>
+            <p class="panel-description">Rapid scan of new RFPs, date shifts, and portfolio health aligned to program pillars and capacity</p>
+            <div class="speech-bubble">"Two new youth arts opportunities—fit looks strong. Add to discovery!"</div>
+          </div>
+        </div>
+
+        <!-- Panel 2 -->
+        <div class="comic-panel">
+          <div class="panel-number">D-02</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🔎</div>
+              <div class="placeholder-text">Side-by-side eligibility matrix, past awardees, and scoring rubric</div>
+            </div>
+            <div class="action-lines">
+              <div class="action-line action-line-1"></div>
+              <div class="action-line action-line-2"></div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Fit Analysis</h3>
+            <p class="panel-description">Evidence-based go/no-go with competitiveness, requirements, and resourcing estimates</p>
+            <div class="speech-bubble">"Eligibility checks out; projected score 88/100—greenlight to strategy!"</div>
+          </div>
+        </div>
+
+        <!-- Panel 3 -->
+        <div class="comic-panel">
+          <div class="panel-number">D-03</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🧩</div>
+              <div class="placeholder-text">Strategy workshop aligning problem, logic model, and outcomes</div>
+            </div>
+            <div class="action-lines">
+              <div class="action-line action-line-1"></div>
+              <div class="action-line action-line-2"></div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Narrative Architecture</h3>
+            <p class="panel-description">Co-creating the spine: need statement, theory of change, program model, outcomes, evaluation</p>
+            <div class="speech-bubble">"Inputs → activities → outcomes—now tie KPIs to funder rubric!"</div>
+          </div>
+        </div>
+
+        <!-- Panel 4 -->
+        <div class="comic-panel">
+          <div class="panel-number">D-04</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🧮</div>
+              <div class="placeholder-text">Budget spreadsheet aligned with narrative and allowability checks</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Budget & Compliance</h3>
+            <p class="panel-description">Iterative budget modeling with allowability, match/in-kind, and procurement alignment</p>
+            <div class="speech-bubble">"Indirects capped at 10%—rebalance materials and evaluation lines."</div>
+          </div>
+        </div>
+
+        <!-- Panel 5 -->
+        <div class="comic-panel">
+          <div class="panel-number">D-05</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">✉️</div>
+              <div class="placeholder-text">Letters of support tracker and MOU templates in motion</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Partner Letters & MOUs</h3>
+            <p class="panel-description">Coordinating signatories and scopes with equity-centered messaging and shared outcomes</p>
+            <div class="speech-bubble">"Libraries confirmed—letter lands Thursday!"</div>
+          </div>
+        </div>
+
+        <!-- Panel 6 -->
+        <div class="comic-panel">
+          <div class="panel-number">D-06</div>
+          <div class="pow-effect">READY!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">✅</div>
+              <div class="placeholder-text">End-of-day checklist with risk log and next actions</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Daily Progress Review</h3>
+            <p class="panel-description">Closeout ritual to update completeness, blockers, and portal readiness</p>
+            <div class="speech-bubble">"All sections at ≥80%—portal rehearsal tomorrow."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WEEKLY WORKFLOW SECTION -->
+    <section class="comic-section">
+      <div class="section-header">
+        <h2 class="section-title">Weekly Strategic Journey</h2>
+        <p class="section-subtitle">Cadences that drive velocity, quality, and predictable submissions</p>
+      </div>
+
+      <div class="comic-grid comic-grid-3">
+        <!-- Monday -->
+        <div class="comic-panel">
+          <div class="panel-number">W-01</div>
+          <div class="pow-effect">PLAN!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">📅</div>
+              <div class="placeholder-text">Pipeline triage with kanban swimlanes and deadline heatmap</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Pipeline Triage Monday</h3>
+            <p class="panel-description">Resourcing decisions, level-of-effort estimates, and go/no-go confirmations</p>
+            <div class="speech-bubble">"Move the state NOFO to red-team by Wednesday—assign reviewers."</div>
+          </div>
+        </div>
+
+        <!-- Tuesday -->
+        <div class="comic-panel">
+          <div class="panel-number">W-02</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">📚</div>
+              <div class="placeholder-text">Evidence catalog with citations, stats, and quotes tagged by section</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Research Deep-Dive Tuesday</h3>
+            <p class="panel-description">Sourcing and organizing evidence for need, equity, and impact sections</p>
+            <div class="speech-bubble">"Strong evidence tier unlocked—insert into need statement."</div>
+          </div>
+        </div>
+
+        <!-- Wednesday -->
+        <div class="comic-panel">
+          <div class="panel-number">W-03</div>
+          <div class="pow-effect">WRITE!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">✍️</div>
+              <div class="placeholder-text">Writing sprints with timers and peer comments resolving</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Writing Sprint Wednesday</h3>
+            <p class="panel-description">Readability targets, rubric alignment, and structured peer reviews</p>
+            <div class="speech-bubble">"Cut 120 words—now under the 2,000-character portal limit."</div>
+          </div>
+        </div>
+
+        <!-- Thursday -->
+        <div class="comic-panel">
+          <div class="panel-number">W-04</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🧾</div>
+              <div class="placeholder-text">Budget and compliance roundtable with sign-off checklist</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Finance & Compliance Thursday</h3>
+            <p class="panel-description">Budget congruence checks, allowability review, and attachments audit</p>
+            <div class="speech-bubble">"SAM/UEI verified; resumes and board roster uploaded."</div>
+          </div>
+        </div>
+
+        <!-- Friday -->
+        <div class="comic-panel">
+          <div class="panel-number">W-05</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🖥️</div>
+              <div class="placeholder-text">Portal submission rehearsal with file-naming checks</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Submission Rehearsal Friday</h3>
+            <p class="panel-description">Dry run in portal to retire last-mile risk and confirm sequence</p>
+            <div class="speech-bubble">"All PDFs validate—submission window opens Monday 9am."</div>
+          </div>
+        </div>
+
+        <!-- Weekend -->
+        <div class="comic-panel">
+          <div class="panel-number">W-06</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">📈</div>
+              <div class="placeholder-text">Metrics dashboard with win rate and section quality scores</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Weekend Metrics & Playbook</h3>
+            <p class="panel-description">Retrospective on throughput, scores, and knowledge capture into templates</p>
+            <div class="speech-bubble">"Average reviewer score +6 this quarter—publish updates to playbook."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MONTHLY JOURNEY SECTION -->
+    <section class="comic-section">
+      <div class="section-header">
+        <h2 class="section-title">Monthly Role Evolution</h2>
+        <p class="section-subtitle">An 18-month journey from Associate to Director of Grants</p>
+      </div>
+
+      <div class="comic-grid comic-grid-2">
+        <!-- Foundation -->
+        <div class="comic-panel">
+          <div class="panel-number">M-01</div>
+          <div class="pow-effect">BEGIN!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🎓</div>
+              <div class="placeholder-text">Mentor-led training with eligibility, narrative basics, and attachments</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Foundation Building (Months 1–4)</h3>
+            <p class="panel-description">Associate writer learns landscape, compliance basics, and contributes to small submissions</p>
+            <div class="speech-bubble">"First letter of support secured—confidence rising!"</div>
+          </div>
+        </div>
+
+        <!-- Advanced -->
+        <div class="comic-panel">
+          <div class="panel-number">M-02</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">⚙️</div>
+              <div class="placeholder-text">Senior writer leading sections and coordinating partners</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Advanced Development (Months 5–8)</h3>
+            <p class="panel-description">Owns major sections, runs red-team cycles, and optimizes readability and rubric fit</p>
+            <div class="speech-bubble">"Score simulation shows +4 points with this revision."</div>
+          </div>
+        </div>
+
+        <!-- Leadership -->
+        <div class="comic-panel">
+          <div class="panel-number">M-03</div>
+          <div class="pow-effect">LEAD!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🧭</div>
+              <div class="placeholder-text">Lead writer orchestrating multi-partner submission calendar</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Leadership Preparation (Months 9–12)</h3>
+            <p class="panel-description">Drives full proposals, dependency mapping, executive reviews, and risk retirement</p>
+            <div class="speech-bubble">"Three proposals live; all tracking green to submit on time."</div>
+          </div>
+        </div>
+
+        <!-- Executive -->
+        <div class="comic-panel">
+          <div class="panel-number">M-04</div>
+          <div class="pow-effect">SCAL E!</div>
+          <div class="panel-image">
+            <div class="image-placeholder">
+              <div class="placeholder-icon">🏛️</div>
+              <div class="placeholder-text">Director of Grants presenting multi-year portfolio strategy</div>
+            </div>
+          </div>
+          <div class="panel-content">
+            <h3 class="panel-title">Executive Development (Months 13–18)</h3>
+            <p class="panel-description">Portfolio mix strategy, funder cultivation, renewals roadmap, and reporting excellence</p>
+            <div class="speech-bubble">"Multi-year award secured—launch stewardship plan Q1."</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVIGATION -->
+    <div class="page-nav no-print">
+      <a href="index.html" class="nav-btn">← Back to Index</a>
+      <a href="grant-framework-system-overview.html" class="nav-btn">🏢 Framework Overview</a>
+      <a href="grant-storyboard-comic-generator.html" class="nav-btn">🎨 Comic Generator</a>
+      <a href="grant-workflow-storyboard-frames.html" class="nav-btn">📋 Workflow Frames</a>
+      <a href="javascript:window.print()" class="nav-btn">🖨️ Print Comic</a>
+      <a href="#" class="nav-btn" id="savePngBtn">💾 Save PNG(s)</a>
+      <a href="grant-chapter-01.html" class="nav-btn">Start Learning →</a>
+    </div>
+  </article>
+
+  <script>
+    // Staggered fade-in for panels
+    document.querySelectorAll('.comic-panel').forEach((panel, index) => {
+      panel.style.animationDelay = `${index * 0.08}s`;
+      panel.classList.add('fade-in');
+    });
+
+    // Inject keyframes
+    const style = document.createElement('style');
+    style.textContent = `
+      .fade-in { opacity: 0; animation: fadeIn 0.6s ease-out forwards; }
+      @keyframes fadeIn { to { opacity: 1; } }
+    `;
+    document.head.appendChild(style);
+
+    // PNG export utilities
+    async function saveStoryboardAsPNGs(rootSelector, baseName = 'grant-storyboard') {
+      const root = document.querySelector(rootSelector);
+      if (!root) return;
+      await new Promise(r => setTimeout(r, 100));
+      const canvas = await html2canvas(root, { scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: root.scrollWidth, windowHeight: root.scrollHeight });
+      const pageWidth = canvas.width;
+      const pageHeight = Math.floor(pageWidth * 1.414); // A4 portrait ratio
+      let offsetY = 0;
+      let pageIndex = 1;
+      while (offsetY < canvas.height) {
+        const sliceHeight = Math.min(pageHeight, canvas.height - offsetY);
+        const pageCanvas = document.createElement('canvas');
+        pageCanvas.width = pageWidth;
+        pageCanvas.height = sliceHeight;
+        const ctx = pageCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, offsetY, pageWidth, sliceHeight, 0, 0, pageWidth, sliceHeight);
+        const url = pageCanvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${baseName}-page-${String(pageIndex).padStart(2,'0')}.png`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        pageIndex += 1;
+        offsetY += sliceHeight;
+      }
+    }
+
+    const saveBtn = document.getElementById('savePngBtn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        saveStoryboardAsPNGs('.wrapper');
+      });
+    }
+  </script>
+</body>
+</html>
+
+

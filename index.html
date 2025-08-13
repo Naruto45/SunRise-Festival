@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sunrise Fairs — Funding-Ready Plan & Narrative</title>
+  <style>
+    :root{
+      --bg:#0e0f12;            /* rich charcoal */
+      --panel:#14161b;         /* card background */
+      --text:#e6e8ee;          /* body text */
+      --muted:#b7bdc9;         /* secondary text */
+      --brand:#7dd3fc;         /* cyan */
+      --brand-2:#a78bfa;       /* violet */
+      --accent:#22d3ee;        /* bright accent */
+      --ok:#34d399;            /* green */
+      --warn:#f59e0b;          /* amber */
+      --danger:#fb7185;        /* rose */
+      --border:#212732;        /* subtle border */
+      --chip:#1c212b;          /* chip bg */
+      --shadow:0 10px 25px rgba(0,0,0,.35);
+      --radius:18px;
+      --radius-sm:12px;
+      --radius-lg:28px;
+      --maxw:1080px;
+    }
+
+    html,body{background:var(--bg);color:var(--text);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";line-height:1.6;margin:0;padding:0}
+
+    .wrap{max-width:var(--maxw);margin:48px auto;padding:0 24px 96px}
+
+    /* Top navigation for cross-page links */
+    .top-links{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:0 0 20px}
+    .top-links a{display:inline-block;background:rgba(125,211,252,.15);border:1px solid var(--border);color:#dff7ff;text-decoration:none;padding:.5rem .9rem;border-radius:999px;font-weight:700;font-size:.9rem}
+    .top-links a:hover{background:rgba(167,139,250,.18);border-color:rgba(167,139,250,.45)}
+
+    .hero{background:linear-gradient(135deg, rgba(125,211,252,.10), rgba(167,139,250,.10));border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .hero:after{content:"";position:absolute;inset:auto -10% -30% -10%;height:300px;background:radial-gradient(60% 50% at 50% 50%, rgba(34,211,238,.35), transparent 60%)}
+
+    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;font-size:.78rem}
+    h1{font-size:2.4rem;line-height:1.2;margin:.25rem 0 1rem;font-weight:800}
+    .subtitle{max-width:60ch;color:var(--muted);font-size:1.05rem}
+
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+    .chip{background:var(--chip);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:.83rem;color:var(--muted)}
+
+    .grid{display:grid;gap:18px}
+    @media(min-width:960px){.grid{grid-template-columns:1.15fr .85fr}}
+
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px 22px 20px;box-shadow:var(--shadow)}
+    .card h2{margin:.25rem 0 10px;font-size:1.35rem}
+    .card h3{margin:1.25rem 0 .5rem;font-size:1.05rem;color:var(--brand)}
+
+    .kpi{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
+    .kpi .item{flex:1 1 180px;background:linear-gradient(135deg, rgba(125,211,252,.07), rgba(167,139,250,.07));border:1px solid var(--border);border-radius:14px;padding:12px}
+    .kpi .n{font-size:1.6rem;font-weight:800}
+    .kpi .t{color:var(--muted);font-size:.92rem}
+
+    .list{margin:0;padding-left:1.15rem}
+    .list li{margin:.35rem 0}
+
+    .badge{display:inline-flex;align-items:center;gap:.5ch;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);padding:.22rem .6rem;border-radius:999px;font-size:.78rem;color:#c5f6e6;font-weight:600}
+
+    .two-col{columns:1;column-gap:28px}
+    @media(min-width:860px){.two-col{columns:2}}
+    .two-col p{break-inside:avoid}
+
+    .table{width:100%;border-collapse:separate;border-spacing:0;margin-top:.3rem;overflow:hidden;border-radius:14px;border:1px solid var(--border)}
+    .table th,.table td{padding:12px 14px;border-bottom:1px solid var(--border)}
+    .table th{background:#0f1116;text-align:left;font-weight:700;color:#cbe6ff}
+    .table tr:last-child td{border-bottom:none}
+    .table tr:nth-child(even) td{background:#11141a}
+
+    .callout{background:linear-gradient(90deg, rgba(34,211,238,.14), rgba(167,139,250,.10));border:1px dashed rgba(125,211,252,.45);padding:14px 16px;border-radius:14px;color:#dff7ff}
+
+    .goal{margin:10px 0 14px}
+    .goal h4{margin:0 0 6px;color:#eaf9ff}
+    .progress{height:9px;background:#0f1218;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg, var(--accent), var(--brand-2));width:var(--w,0%)}
+
+    .footer{margin-top:36px;color:var(--muted);font-size:.9rem}
+
+    /* Print Styles */
+    @media print{
+      body{background:white;color:#111}
+      .hero,.card{box-shadow:none}
+      .wrap{margin:0;padding:0}
+      .chip,.badge{border-color:#999;color:#111}
+      a{color:#111}
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav class="top-links">
+      <a href="funding.html">🏠 Home</a>
+      <a href="48lms/grant-storyboard-comic-display.html">📖 Grant Comic Display</a>
+      <a href="48lms/grant-storyboard-comic-generator.html">🎨 Grant Comic Generator</a>
+      <a href="48lms/grant-workflow-storyboard-frames.html">📋 Grant Workflow Frames</a>
+    </nav>
+    <section class="hero">
+      <div class="eyebrow">Funding-Ready Narrative & Plan</div>
+      <h1>Sunrise Fairs</h1>
+      <p class="subtitle">Resilient, solar-powered community fairs delivering STEAM (Science, Technology, Engineering, Arts, Math) education, arts access, and green innovation across King County.</p>
+      <div class="chips">
+        <span class="chip">Equity & Access</span>
+        <span class="chip">STEAM + Arts</span>
+        <span class="chip">Sustainability</span>
+        <span class="chip">Community Resilience</span>
+        <span class="chip">Auburn Launch • March 2026</span>
+      </div>
+      
+      <!-- Hero Image Placeholder -->
+      <div class="hero-image" style="margin-top: 24px; text-align: center; padding: 20px; background: rgba(125,211,252,.05); border: 2px dashed rgba(125,211,252,.3); border-radius: 12px;">
+        <img src="image.png" alt="A vibrant, diverse community fair in a sunny park setting with solar panels powering colorful STEAM workshops. Families of all backgrounds engaging in hands-on activities - children building circuits, teens creating solar art, adults learning about green technology. Bright, optimistic lighting with solar-powered LED lights, sustainable materials, and a warm, inclusive atmosphere." style="width: 100%; max-width: 800px; height: auto; border-radius: 8px; margin-bottom: 12px;">
+        <p style="color: var(--muted); font-size: 0.9rem; margin: 0;">
+          <strong>HERO IMAGE PROMPT:</strong><br/>
+          "A vibrant, diverse community fair in a sunny park setting with solar panels powering colorful STEAM workshops. Families of all backgrounds engaging in hands-on activities - children building circuits, teens creating solar art, adults learning about green technology. Bright, optimistic lighting with solar-powered LED lights, sustainable materials, and a warm, inclusive atmosphere. Professional photography style, high resolution, inspiring and accessible."
+        </p>
+      </div>
+    </section>
+
+    <section class="grid" style="margin-top:20px">
+      <article class="card">
+        <h2>Executive Summary</h2>
+        <div class="two-col">
+          <p><strong>Sunrise Fairs</strong> is a new nonprofit initiative that produces free or low-cost, solar-powered pop-up fairs to teach sustainability and STEAM—intentionally centering youth arts education and community resilience. We will operate county-wide with a first fair slated for <strong>Auburn, WA in March 2026</strong> and a broader programming runway beginning <strong>January 2026</strong>.</p>
+          <p>Events combine interactive workshops, art-making, green-tech demonstrations, and a marketplace featuring local creators and climate-forward entrepreneurs. Our focus is on underserved families and schools in King County who face cost, transportation, or opportunity barriers to STEAM and cultural learning.</p>
+          <p>The requested funding supports a three-year growth plan to deliver multiple fairs annually, build school and nonprofit partnerships, and establish a repeatable model. <span class="badge">Budget plan: $180,000 over 3 years ($60,000/yr)</span> managed with transparent milestones and outcomes.</p>
+        </div>
+        <div class="kpi">
+          <div class="item"><div class="n">3 Years</div><div class="t">Seed runway (phased rollout)</div></div>
+          <div class="item"><div class="n">4–6</div><div class="t">Fairs per year by Year 3</div></div>
+          <div class="item"><div class="n">60%+</div><div class="t">Free/low-cost participation</div></div>
+          <div class="item"><div class="n">25–40</div><div class="t">Workshops per annual cycle</div></div>
+        </div>
+        
+        <!-- KPI Visualization Image -->
+        <div class="kpi-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(167,139,250,.05); border: 2px dashed rgba(167,139,250,.3); border-radius: 12px;">
+          <img src="image1.png" alt="An infographic-style illustration showing growth metrics: a timeline from 2026-2028 with increasing numbers of solar-powered fairs, diverse family participation charts, workshop count progression, and community impact indicators. Clean, modern design with solar energy motifs, inclusive iconography, and clear data visualization. Professional business presentation style." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+          <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+            <strong>KPI VISUALIZATION PROMPT:</strong><br/>
+            "An infographic-style illustration showing growth metrics: a timeline from 2026-2028 with increasing numbers of solar-powered fairs, diverse family participation charts, workshop count progression, and community impact indicators. Clean, modern design with solar energy motifs, inclusive iconography, and clear data visualization. Professional business presentation style."
+          </p>
+        </div>
+      </article>
+
+      <aside class="card">
+        <h2>Contact & Org</h2>
+        <p><strong>Primary Contact:</strong> Crystal Bell — <a href="mailto:ctbell2017@gmail.com">ctbell2017@gmail.com</a><br/>
+           <strong>Fiscal Sponsor:</strong> Key Tech Labs<br/>
+           <strong>Discipline:</strong> Science & Technology, Arts & Culture</p>
+        <h3>Key People</h3>
+        <ul class="list">
+          <li><strong>Jessica Ballard Thiessen</strong>, Founder & Executive Director</li>
+          <li><strong>Afrika Vedela</strong>, Operations Lead</li>
+          <li><strong>Reco Bembry</strong>, Event Coordinator</li>
+          <li><strong>Crystal Bell</strong>, Grants & Partnerships Lead (10+ yrs grant mgmt.)</li>
+        </ul>
+        <h3>Status</h3>
+        <ul class="list">
+          <li><strong>State Incorporation:</strong> In progress; to be incorporated in WA; operations in King County.</li>
+          <li><strong>Federal Recognition:</strong> Fiscal sponsorship in process (contract pending).</li>
+          <li><strong>4Culture Account:</strong> Will confirm profile completion as required.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <article class="card" style="margin-top:18px">
+      <h2>Vision, Need, and Community Alignment</h2>
+      <div class="two-col">
+        <p><strong>Vision:</strong> A resilient, creative King County where families—especially those historically underserved—engage in hands-on STEAM and arts learning that inspires climate literacy, career curiosity, and civic pride.</p>
+        <p><strong>Community Need:</strong> Many families experience cost, transportation, and access barriers to enrichment. Sunrise Fairs addresses these by bringing the programming to neighborhoods, keeping events free or low-cost, and partnering with schools and local groups. Workshops and demos will reflect community voices, languages, and cultures.</p>
+        <p><strong>Public Benefits:</strong> Expanded access to STEAM and arts education; opportunities for young people to create, tinker, and perform; local green-tech exposure; and county-wide programming beyond Seattle to reach Auburn and additional cities.</p>
+      </div>
+      <div class="callout"><strong>Equity Promise:</strong> At least 60% of all attendance opportunities will be free or subsidized; we will co-design at least 30% of workshops with community partners to reflect local priorities and cultures.</div>
+      
+      <!-- Community Impact Image -->
+      <div class="community-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(52,211,153,.05); border: 2px dashed rgba(52,211,153,.3); border-radius: 12px;">
+        <img src="image2.png" alt="A heartwarming scene of diverse families from different cultural backgrounds working together at STEAM workshops. Children of various ages collaborating on solar-powered projects, parents learning alongside them, community leaders facilitating activities. The setting shows accessibility features - multilingual signs, wheelchair ramps, ASL interpreters. Warm, inclusive lighting with a sense of belonging and empowerment." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>COMMUNITY IMPACT PROMPT:</strong><br/>
+          "A heartwarming scene of diverse families from different cultural backgrounds working together at STEAM workshops. Children of various ages collaborating on solar-powered projects, parents learning alongside them, community leaders facilitating activities. The setting shows accessibility features - multilingual signs, wheelchair ramps, ASL interpreters. Warm, inclusive lighting with a sense of belonging and empowerment."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Program Model</h2>
+      <div class="two-col">
+        <p>Each fair includes three braided experiences:</p>
+        <ol class="list">
+          <li><strong>Solar-Powered Showcase:</strong> Demonstrations of off-grid energy, mobile solar stations, and hands-on sustainability exhibits.</li>
+          <li><strong>STEAM + Arts Workshops:</strong> Youth-friendly sessions (e.g., solar art, circuits & wearables, climate storytelling, maker stations) with a clear learning outcome and take-home artifact.</li>
+          <li><strong>Green Marketplace:</strong> Tables featuring local artists, cultural groups, and climate-forward vendors; micro-stages for student showcases and community performances.</li>
+        </ol>
+        <p>Accessibility supports include transit-friendly site selection, ADA-aware layout, multilingual signage, and community ambassador roles for outreach and wayfinding.</p>
+      </div>
+      
+      <!-- Program Model Image -->
+      <div class="program-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(34,211,238,.05); border: 2px dashed rgba(34,211,238,.3); border-radius: 12px;">
+        <img src="image3.png" alt="A three-panel illustration showing the braided experiences: 1) Solar-powered showcase with mobile solar stations and energy demonstrations, 2) STEAM workshops with youth creating circuits, solar art, and climate storytelling projects, 3) Green marketplace with local artists, cultural groups, and sustainable vendors. Each panel shows diverse participation and hands-on learning. Clean, educational illustration style." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>PROGRAM MODEL PROMPT:</strong><br/>
+          "A three-panel illustration showing the braided experiences: 1) Solar-powered showcase with mobile solar stations and energy demonstrations, 2) STEAM workshops with youth creating circuits, solar art, and climate storytelling projects, 3) Green marketplace with local artists, cultural groups, and sustainable vendors. Each panel shows diverse participation and hands-on learning. Clean, educational illustration style."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Goals, Outcomes & KPIs</h2>
+      <p>We track outcomes against three lenses—<em>Access & Equity</em>, <em>Learning & Creativity</em>, and <em>Resilience & Sustainability</em>.</p>
+
+      <div class="goal">
+        <h4>G1 · Access & Equity</h4>
+        <ul class="list">
+          <li><strong>Outcome:</strong> Reduce barriers for underserved families to engage with STEAM and arts.</li>
+          <li><strong>KPIs:</strong> ≥60% of opportunities free/low-cost; ≥3 new neighborhood partners per year; ≥70% of attendees report events as accessible and welcoming.</li>
+        </ul>
+        <div class="progress" title="Target completion plan"><i style="--w:66%"></i></div>
+      </div>
+
+      <div class="goal">
+        <h4>G2 · Learning & Creativity</h4>
+        <ul class="list">
+          <li><strong>Outcome:</strong> Increase hands-on STEAM engagement and creative confidence among youth.</li>
+          <li><strong>KPIs:</strong> 25–40 workshops/year by Year 3; ≥75% of youth demonstrate skill gain via quick-check rubrics; ≥2 youth showcases per fair.</li>
+        </ul>
+        <div class="progress"><i style="--w:58%"></i></div>
+      </div>
+
+      <div class="goal">
+        <h4>G3 · Resilience & Sustainability</h4>
+        <ul class="list">
+          <li><strong>Outcome:</strong> Improve climate literacy and community preparedness via solar demos and maker activities.</li>
+          <li><strong>KPIs:</strong> ≥1 solar demo per fair; ≥1 resilience micro-talk per fair; ≥65% attendee intent to adopt a sustainable practice (post-event survey).</li>
+        </ul>
+        <div class="progress"><i style="--w:52%"></i></div>
+      </div>
+      
+      <!-- Goals Progress Image -->
+      <div class="goals-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(245,158,11,.05); border: 2px dashed rgba(245,158,11,.3); border-radius: 12px;">
+        <img src="image4.png" alt="A visual representation of the three goal areas with progress indicators: Access & Equity showing diverse family participation and accessibility features, Learning & Creativity displaying youth skill development and creative projects, Resilience & Sustainability illustrating solar demos and climate literacy activities. Each section shows before/after scenarios and measurable outcomes. Modern dashboard style with clear metrics." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>GOALS PROGRESS PROMPT:</strong><br/>
+          "A visual representation of the three goal areas with progress indicators: Access & Equity showing diverse family participation and accessibility features, Learning & Creativity displaying youth skill development and creative projects, Resilience & Sustainability illustrating solar demos and climate literacy activities. Each section shows before/after scenarios and measurable outcomes. Modern dashboard style with clear metrics."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Three-Year Workplan & Timeline</h2>
+      <table class="table">
+        <thead><tr><th>Phase</th><th>Timeframe</th><th>Milestones</th><th>Outputs</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>Phase 0 · Setup</strong></td>
+            <td>Q4 2025</td>
+            <td>Finalize fiscal sponsorship; WA incorporation in motion; venue scouting; partner MOUs</td>
+            <td>Ops checklist; draft workshop catalog; safety plan; DEI access plan</td>
+          </tr>
+          <tr>
+            <td><strong>Phase 1 · Pilot</strong></td>
+            <td>Q1–Q2 2026</td>
+            <td>First fair in Auburn (Mar 2026); post-event evaluation; iterate logistics</td>
+            <td>1–2 fairs; ≥12 workshops; baseline metrics established</td>
+          </tr>
+          <tr>
+            <td><strong>Phase 2 · Expansion</strong></td>
+            <td>Q3–Q4 2026</td>
+            <td>New city partnerships; educator cohort training; multilingual assets</td>
+            <td>2–3 fairs; ≥16 workshops; vendor roster & school partners scaled</td>
+          </tr>
+          <tr>
+            <td><strong>Phase 3 · Scale</strong></td>
+            <td>2027–2028</td>
+            <td>4–6 fairs per year; mobile solar kit enhancements; county-wide circuit</td>
+            <td>Annual playbook; 25–40 workshops/yr; robust impact reporting</td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <!-- Timeline Visualization Image -->
+      <div class="timeline-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(125,211,252,.05); border: 2px dashed rgba(125,211,252,.3); border-radius: 12px;">
+        <img src="image5.png" alt="A horizontal timeline illustration showing the three-year journey: Phase 0 (Setup) with planning documents and partnerships, Phase 1 (Pilot) with the first Auburn fair, Phase 2 (Expansion) with multiple city events, Phase 3 (Scale) with county-wide impact. Each phase shows key milestones, growing participation numbers, and expanding solar infrastructure. Professional project management style with clear progression indicators." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>TIMELINE VISUALIZATION PROMPT:</strong><br/>
+          "A horizontal timeline illustration showing the three-year journey: Phase 0 (Setup) with planning documents and partnerships, Phase 1 (Pilot) with the first Auburn fair, Phase 2 (Expansion) with multiple city events, Phase 3 (Scale) with county-wide impact. Each phase shows key milestones, growing participation numbers, and expanding solar infrastructure. Professional project management style with clear progression indicators."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Budget Framework (Summary)</h2>
+      <p><strong>Total:</strong> $180,000 over 3 years ($60,000 per year). Final line items will be provided in the full RFP budget, with grants-managed controls and quarterly reporting.</p>
+      <table class="table">
+        <thead><tr><th>Category</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Personnel & Stipends</td><td>$22,000</td><td>$22,000</td><td>$22,000</td><td>Workshop leads, community ambassadors, ops</td></tr>
+          <tr><td>Program & Materials</td><td>$14,500</td><td>$14,500</td><td>$14,500</td><td>Solar kits, art supplies, safety & accessibility</td></tr>
+          <tr><td>Venue & Logistics</td><td>$9,500</td><td>$9,500</td><td>$9,500</td><td>Parks/permits, insurance, rentals, ADA</td></tr>
+          <tr><td>Outreach & Translation</td><td>$5,000</td><td>$5,000</td><td>$5,000</td><td>Multilingual materials, community media</td></tr>
+          <tr><td>Evaluation & Data</td><td>$3,000</td><td>$3,000</td><td>$3,000</td><td>Surveys, dashboards, reporting</td></tr>
+          <tr><td>Admin/FS (sponsor)</td><td>$6,000</td><td>$6,000</td><td>$6,000</td><td>Fiscal sponsor fee & compliance</td></tr>
+        </tbody>
+      </table>
+      <p class="callout"><strong>Leverage:</strong> We will braid funds with in-kind support (venues, materials, volunteer hours) and aligned micro-grants. Each fair will target at least two in-kind partners.</p>
+      
+      <!-- Budget Visualization Image -->
+      <div class="budget-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(167,139,250,.05); border: 2px dashed rgba(167,139,250,.3); border-radius: 12px;">
+        <img src="image6.png" alt="A clean financial infographic showing the $180,000 budget breakdown over three years: pie charts for each year showing Personnel, Program Materials, Venue & Logistics, Outreach, Evaluation, and Admin costs. Visual elements include solar panels representing sustainability investments, diverse people icons for personnel, and community symbols for outreach. Professional financial presentation style with clear cost allocation." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>BUDGET VISUALIZATION PROMPT:</strong><br/>
+          "A clean financial infographic showing the $180,000 budget breakdown over three years: pie charts for each year showing Personnel, Program Materials, Venue & Logistics, Outreach, Evaluation, and Admin costs. Visual elements include solar panels representing sustainability investments, diverse people icons for personnel, and community symbols for outreach. Professional financial presentation style with clear cost allocation."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Partnerships, Outreach & Access</h2>
+      <div class="two-col">
+        <p><strong>Partnership Strategy:</strong> Formal MOUs with schools, youth-serving organizations, cultural groups, libraries, and parks. Vendor mix prioritizes local artists and sustainability-forward makers. We will host educator roundtables to co-design youth workshops and align with classroom needs.</p>
+        <p><strong>Outreach Channels:</strong> 4Culture events (Hello 4Culture, Doors Open Share Outs, Launch Outreach), community radio and newsletters, multilingual flyers, faith/community hubs, and youth leadership councils. Community ambassadors will support door-to-door flyering and event-day wayfinding.</p>
+        <p><strong>Access Commitments:</strong> Transit-first sites; ADA-aware layouts; ASL/interpretation as needed; childcare corner at larger events; sliding-scale for vendor fees; reserved free workshop seats for Title I schools.</p>
+      </div>
+      
+      <!-- Partnership Network Image -->
+      <div class="partnership-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(34,211,238,.05); border: 2px dashed rgba(34,211,238,.3); border-radius: 12px;">
+        <img src="image7.png" alt="A network diagram showing interconnected partnerships: schools, youth organizations, cultural groups, libraries, parks, and community hubs all connected to Sunrise Fairs at the center. Each connection shows collaboration types - workshops, venues, outreach, cultural programming. Diverse community representatives and sustainable symbols throughout. Clean network visualization style with clear relationship mapping." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>PARTNERSHIP NETWORK PROMPT:</strong><br/>
+          "A network diagram showing interconnected partnerships: schools, youth organizations, cultural groups, libraries, parks, and community hubs all connected to Sunrise Fairs at the center. Each connection shows collaboration types - workshops, venues, outreach, cultural programming. Diverse community representatives and sustainable symbols throughout. Clean network visualization style with clear relationship mapping."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Risk Management & Safety</h2>
+      <ul class="list">
+        <li><strong>Operational:</strong> Weather and power contingencies with tenting, battery redundancy, and rescheduling windows.</li>
+        <li><strong>Safety:</strong> First-aid, volunteer training, child-safety protocol for youth workshops, vendor safety checklist.</li>
+        <li><strong>Financial:</strong> Phased commitments; go/no-go gates 60 days pre-event; transparent cost tracking.</li>
+        <li><strong>Reputation:</strong> Feedback channels; community advisory input; rapid iteration after each event.</li>
+      </ul>
+      
+      <!-- Safety & Risk Management Image -->
+      <div class="safety-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(251,113,133,.05); border: 2px dashed rgba(251,113,133,.3); border-radius: 12px;">
+        <img src="image8.png" alt="A comprehensive safety planning illustration showing: weather contingency with tents and battery backup, first-aid stations and volunteer training, child-safety protocols for youth workshops, vendor safety checklists, and emergency response procedures. The scene shows a well-organized fair with clear safety signage, trained volunteers, and backup systems. Professional safety planning style with clear protocols." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>SAFETY & RISK MANAGEMENT PROMPT:</strong><br/>
+          "A comprehensive safety planning illustration showing: weather contingency with tents and battery backup, first-aid stations and volunteer training, child-safety protocols for youth workshops, vendor safety checklists, and emergency response procedures. The scene shows a well-organized fair with clear safety signage, trained volunteers, and backup systems. Professional safety planning style with clear protocols."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Measurement & Evaluation</h2>
+      <p>We will report outcomes quarterly and annually, blending quantitative metrics with qualitative stories.</p>
+      <table class="table">
+        <thead><tr><th>Dimension</th><th>Indicators</th><th>Methods</th><th>Cadence</th></tr></thead>
+        <tbody>
+          <tr><td>Access & Equity</td><td>% free/low-cost, partner count, geographic spread</td><td>Registration data, partner MOUs, ZIP analysis</td><td>Quarterly</td></tr>
+          <tr><td>Learning & Creativity</td><td>Workshop completions, skill-gain rubrics, youth showcases</td><td>Facilitator rubrics, artifact reviews, photos</td><td>Per event</td></tr>
+          <tr><td>Resilience & Sustainability</td><td>Solar demos held, sustainability pledges</td><td>On-site logs, exit surveys</td><td>Per event</td></tr>
+          <tr><td>Community Voice</td><td>Feedback volume & sentiment</td><td>Surveys, interview snippets</td><td>Per event + annual</td></tr>
+        </tbody>
+      </table>
+      
+      <!-- Evaluation Dashboard Image -->
+      <div class="evaluation-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(52,211,153,.05); border: 2px dashed rgba(52,211,153,.3); border-radius: 12px;">
+        <img src="image9.png" alt="A modern analytics dashboard showing real-time evaluation metrics: participation rates, skill development tracking, community feedback sentiment, sustainability impact measurements, and geographic reach data. The dashboard includes interactive charts, progress indicators, and qualitative feedback snippets. Clean data visualization style with clear metrics and actionable insights." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>EVALUATION DASHBOARD PROMPT:</strong><br/>
+          "A modern analytics dashboard showing real-time evaluation metrics: participation rates, skill development tracking, community feedback sentiment, sustainability impact measurements, and geographic reach data. The dashboard includes interactive charts, progress indicators, and qualitative feedback snippets. Clean data visualization style with clear metrics and actionable insights."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Governance & Roles</h2>
+      <ul class="list">
+        <li><strong>Executive Leadership:</strong> Jessica Ballard Thiessen (program vision & partnerships)</li>
+        <li><strong>Operations:</strong> Afrika Vedela (logistics, vendor relations, volunteer ops)</li>
+        <li><strong>Community & Events:</strong> Reco Bembry (engagement, stages, showcases)</li>
+        <li><strong>Grants & Compliance:</strong> Crystal Bell (funding, reporting, fiscal sponsor liaison)</li>
+      </ul>
+      
+      <!-- Team Leadership Image -->
+      <div class="team-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(245,158,11,.05); border: 2px dashed rgba(245,158,11,.3); border-radius: 12px;">
+        <img src="image10.png" alt="A professional team portrait showing the four key leaders: Jessica Ballard Thiessen (Executive Director), Afrika Vedela (Operations Lead), Reco Bembry (Event Coordinator), and Crystal Bell (Grants & Partnerships Lead). Each person is shown in their element - Jessica with community partners, Afrika managing logistics, Reco coordinating events, Crystal with grant documents. Diverse, professional, collaborative atmosphere." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
+        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
+          <strong>TEAM LEADERSHIP PROMPT:</strong><br/>
+          "A professional team portrait showing the four key leaders: Jessica Ballard Thiessen (Executive Director), Afrika Vedela (Operations Lead), Reco Bembry (Event Coordinator), and Crystal Bell (Grants & Partnerships Lead). Each person is shown in their element - Jessica with community partners, Afrika managing logistics, Reco coordinating events, Crystal with grant documents. Diverse, professional, collaborative atmosphere."
+        </p>
+      </div>
+    </article>
+
+    <article class="card">
+      <h2>Submission Checklist</h2>
+      <ul class="list">
+        <li>Contact updated to <strong>Crystal Bell</strong> — <a href="mailto:ctbell2017@gmail.com">ctbell2017@gmail.com</a></li>
+        <li>Budget language corrected to <strong>$180k over 3 years ($60k/yr)</strong></li>
+        <li>Program description includes <strong>STEAM</strong>, <strong>arts education for youth</strong>, and <strong>resilience</strong></li>
+        <li>Typos fixed: “incorporated” and “King County”</li>
+        <li>4Culture alignment and public benefits explicitly stated</li>
+        <li>Evaluation plan, equity commitments, and risk mitigation included</li>
+      </ul>
+    </article>
+
+    <p class="footer">Prepared for funding submission — Sunrise Fairs • © 2025</p>
+  </main>
+</body>
+</html>
