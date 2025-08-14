@@ -22,8 +22,9 @@ Sunrise Fairs represents a transformative initiative that combines STEAM educati
 - **Target Demographics:** Underserved families and youth
 
 ### Essential Credentials
-- **MongoDB Connection:** mongodb+s...
-- **OpenAI API Key:** sk-...
+- **MongoDB Connection:** mongodb+...
+- **OpenAI API Key:** sk....
+
 ## Grant Application Strategy Framework
 
 ### 1. Executive Summary Customization
@@ -454,11 +455,131 @@ Remember that successful grant applications require both compelling content and 
 
 The Sunrise Fairs initiative represents a unique and innovative approach to community development, education, and sustainability. With proper customization and strategic positioning, this framework can be successfully deployed across a wide range of grant opportunities to secure the funding needed to bring this vision to life.
 
+## Critical 4Culture Launch Program Update
+
+### Immediate Action Required - 4Culture Eligibility Confirmation
+
+**Date:** August 13, 2025  
+**Deadline:** August 14, 2025 at 12pm PT  
+**Contact:** Casey (4Culture Staff)  
+**Status:** Pending eligibility confirmation
+
+#### Required Information for 4Culture Profile
+
+The following information must be added to your 4Culture account profile at https://apply.4culture.org/:
+
+**1. Mission Statement:**
+"A brief description of an organization's purpose, who it serves, and how it serves them."
+
+**Recommended Mission for Sunrise Fairs:**
+"Sunrise Fairs produces free or low-cost, solar-powered pop-up fairs to teach sustainability and STEAM education, intentionally centering youth arts education and community resilience. We serve underserved families and schools in King County who face cost, transportation, or opportunity barriers to STEAM and cultural learning through interactive workshops, art-making, green-tech demonstrations, and local marketplace opportunities."
+
+**2. Federal Employer Identification Number (EIN):**
+- **Status:** Use fiscal sponsor's EIN
+- **Action:** Include Key Tech Labs' EIN (to be obtained)
+- **Note:** If no fiscal sponsor EIN available, write "n/a"
+
+**3. WA State Unified Business Identifier (UBI):**
+- **Status:** Specific to Sunrise Fairs group
+- **Action:** Write "n/a" if not yet obtained
+- **Important:** Do NOT use fiscal sponsor's UBI
+
+**4. King County Percentage:**
+- **Recommended:** 100%
+- **Justification:** All programming will take place in King County, starting with Auburn in March 2026
+
+**5. Primary Address:**
+- **Requirement:** Physical address (not PO Box)
+- **Options:**
+  - Primary venue address (to be determined)
+  - Key Tech Labs address (if using as fiscal sponsor)
+  - Team member's address (temporary solution)
+- **Note:** Can separate shipping and mailing addresses if needed
+
+#### Step-by-Step Action Plan
+
+**Immediate Actions (Today):**
+1. [ ] Create/login to 4Culture account at https://apply.4culture.org/
+2. [ ] Obtain Key Tech Labs' EIN for fiscal sponsor information
+3. [ ] Determine primary physical address for organization
+4. [ ] Complete profile information using steps 3-7 of 4Culture guide
+5. [ ] Submit profile completion confirmation to Casey
+
+**Profile Completion Checklist:**
+- [ ] Mission statement added and reviewed
+- [ ] EIN information confirmed (fiscal sponsor or "n/a")
+- [ ] UBI status noted ("n/a" for Sunrise Fairs)
+- [ ] King County percentage set to 100%
+- [ ] Primary physical address entered
+- [ ] Shipping/mailing addresses configured if needed
+- [ ] Profile saved and submitted
+
+#### Strategic Considerations
+
+**Fiscal Sponsor Coordination:**
+- Contact Key Tech Labs immediately for EIN
+- Confirm fiscal sponsorship agreement status
+- Ensure proper documentation for 4Culture requirements
+
+**Address Strategy:**
+- Consider using Key Tech Labs address as primary
+- Plan for future dedicated space as organization grows
+- Maintain professional appearance while meeting requirements
+
+**Mission Statement Optimization:**
+- Emphasize King County focus
+- Highlight underserved population targeting
+- Include specific program elements (STEAM, arts, sustainability)
+- Demonstrate clear public benefit
+
+#### Risk Mitigation
+
+**If EIN Not Available:**
+- Use "n/a" as instructed
+- Document fiscal sponsor relationship clearly
+- Prepare explanation for future grant applications
+
+**If Address Challenge:**
+- Use team member address temporarily
+- Plan for professional address solution
+- Consider virtual office or co-working space
+
+**If Deadline Missed:**
+- Contact Casey immediately with explanation
+- Request deadline extension if possible
+- Prepare alternative application timeline
+
+#### Next Steps After Profile Completion
+
+1. **Confirm Eligibility:** Await 4Culture confirmation of Launch program eligibility
+2. **Prepare Full Application:** Begin developing complete Launch program application
+3. **Strengthen Partnerships:** Continue building King County partnerships
+4. **Documentation:** Prepare all required attachments and supporting materials
+5. **Timeline Alignment:** Ensure March 2026 launch timeline aligns with grant requirements
+
+### Updated Grant Application Priority
+
+**Immediate Priority (Next 24 Hours):**
+- 4Culture Launch program eligibility confirmation
+- Profile completion and submission
+- Fiscal sponsor coordination
+
+**Short-term Priority (Next 30 Days):**
+- Full 4Culture Launch application development
+- Partnership strengthening in King County
+- Budget refinement and documentation
+
+**Medium-term Priority (Next 90 Days):**
+- Additional grant opportunity identification
+- Comprehensive application strategy development
+- Community engagement and support building
+
 **Next Steps:**
-1. Review and customize content for specific grant opportunities
-2. Develop supporting documentation and attachments
-3. Build and strengthen community partnerships
-4. Prepare evaluation and measurement tools
-5. Submit applications with confidence and strategic positioning
+1. **IMMEDIATE:** Complete 4Culture profile requirements (deadline: August 14, 12pm PT)
+2. Review and customize content for specific grant opportunities
+3. Develop supporting documentation and attachments
+4. Build and strengthen community partnerships
+5. Prepare evaluation and measurement tools
+6. Submit applications with confidence and strategic positioning
 
 This guide serves as your comprehensive playbook for grant success. Use it wisely, customize strategically, and pursue funding opportunities with confidence and purpose.
