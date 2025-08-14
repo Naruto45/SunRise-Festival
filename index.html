@@ -1,504 +1,1181 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sunrise Fairs — Funding-Ready Plan & Narrative</title>
-  <style>
-    :root{
-      --bg:#0e0f12;            /* rich charcoal */
-      --panel:#14161b;         /* card background */
-      --text:#e6e8ee;          /* body text */
-      --muted:#b7bdc9;         /* secondary text */
-      --brand:#7dd3fc;         /* cyan */
-      --brand-2:#a78bfa;       /* violet */
-      --accent:#22d3ee;        /* bright accent */
-      --ok:#34d399;            /* green */
-      --warn:#f59e0b;          /* amber */
-      --danger:#fb7185;        /* rose */
-      --border:#212732;        /* subtle border */
-      --chip:#1c212b;          /* chip bg */
-      --shadow:0 10px 25px rgba(0,0,0,.35);
-      --radius:18px;
-      --radius-sm:12px;
-      --radius-lg:28px;
-      --maxw:1080px;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Design & Python Development - Complete Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+    /* ===== RESET & BASE STYLES ===== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
-
-    html,body{background:var(--bg);color:var(--text);font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";line-height:1.6;margin:0;padding:0}
-
-    .wrap{max-width:var(--maxw);margin:48px auto;padding:0 24px 96px}
-
-    /* Top navigation for cross-page links */
-    .top-links{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;margin:0 0 20px}
-    .top-links a{display:inline-block;background:rgba(125,211,252,.15);border:1px solid var(--border);color:#dff7ff;text-decoration:none;padding:.5rem .9rem;border-radius:999px;font-weight:700;font-size:.9rem}
-    .top-links a:hover{background:rgba(167,139,250,.18);border-color:rgba(167,139,250,.45)}
-
-    .hero{background:linear-gradient(135deg, rgba(125,211,252,.10), rgba(167,139,250,.10));border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px 32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-    .hero:after{content:"";position:absolute;inset:auto -10% -30% -10%;height:300px;background:radial-gradient(60% 50% at 50% 50%, rgba(34,211,238,.35), transparent 60%)}
-
-    .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:700;font-size:.78rem}
-    h1{font-size:2.4rem;line-height:1.2;margin:.25rem 0 1rem;font-weight:800}
-    .subtitle{max-width:60ch;color:var(--muted);font-size:1.05rem}
-
-    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
-    .chip{background:var(--chip);border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:.83rem;color:var(--muted)}
-
-    .grid{display:grid;gap:18px}
-    @media(min-width:960px){.grid{grid-template-columns:1.15fr .85fr}}
-
-    .card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:22px 22px 20px;box-shadow:var(--shadow)}
-    .card h2{margin:.25rem 0 10px;font-size:1.35rem}
-    .card h3{margin:1.25rem 0 .5rem;font-size:1.05rem;color:var(--brand)}
-
-    .kpi{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
-    .kpi .item{flex:1 1 180px;background:linear-gradient(135deg, rgba(125,211,252,.07), rgba(167,139,250,.07));border:1px solid var(--border);border-radius:14px;padding:12px}
-    .kpi .n{font-size:1.6rem;font-weight:800}
-    .kpi .t{color:var(--muted);font-size:.92rem}
-
-    .list{margin:0;padding-left:1.15rem}
-    .list li{margin:.35rem 0}
-
-    .badge{display:inline-flex;align-items:center;gap:.5ch;background:rgba(52,211,153,.12);border:1px solid rgba(52,211,153,.35);padding:.22rem .6rem;border-radius:999px;font-size:.78rem;color:#c5f6e6;font-weight:600}
-
-    .two-col{columns:1;column-gap:28px}
-    @media(min-width:860px){.two-col{columns:2}}
-    .two-col p{break-inside:avoid}
-
-    .table{width:100%;border-collapse:separate;border-spacing:0;margin-top:.3rem;overflow:hidden;border-radius:14px;border:1px solid var(--border)}
-    .table th,.table td{padding:12px 14px;border-bottom:1px solid var(--border)}
-    .table th{background:#0f1116;text-align:left;font-weight:700;color:#cbe6ff}
-    .table tr:last-child td{border-bottom:none}
-    .table tr:nth-child(even) td{background:#11141a}
-
-    .callout{background:linear-gradient(90deg, rgba(34,211,238,.14), rgba(167,139,250,.10));border:1px dashed rgba(125,211,252,.45);padding:14px 16px;border-radius:14px;color:#dff7ff}
-
-    .goal{margin:10px 0 14px}
-    .goal h4{margin:0 0 6px;color:#eaf9ff}
-    .progress{height:9px;background:#0f1218;border:1px solid var(--border);border-radius:999px;overflow:hidden}
-    .progress > i{display:block;height:100%;background:linear-gradient(90deg, var(--accent), var(--brand-2));width:var(--w,0%)}
-
-    .footer{margin-top:36px;color:var(--muted);font-size:.9rem}
-
-    /* Print Styles */
-    @media print{
-      body{background:white;color:#111}
-      .hero,.card{box-shadow:none}
-      .wrap{margin:0;padding:0}
-      .chip,.badge{border-color:#999;color:#111}
-      a{color:#111}
+    
+    :root {
+        /* Color Palette */
+        --primary-color: #3B82F6;
+        --primary-dark: #2563EB;
+        --primary-light: #60A5FA;
+        --secondary-color: #10B981;
+        --accent-color: #F59E0B;
+        --warning-color: #EF4444;
+        
+        /* Neutral Colors */
+        --white: #FFFFFF;
+        --gray-50: #F9FAFB;
+        --gray-100: #F3F4F6;
+        --gray-200: #E5E7EB;
+        --gray-300: #D1D5DB;
+        --gray-400: #9CA3AF;
+        --gray-500: #6B7280;
+        --gray-600: #4B5563;
+        --gray-700: #374151;
+        --gray-800: #1F2937;
+        --gray-900: #111827;
+        
+        /* Dark Theme Colors */
+        --dark-bg: #0F172A;
+        --dark-surface: #1E293B;
+        --dark-surface-2: #334155;
+        --dark-border: #475569;
+        --dark-text: #F1F5F9;
+        --dark-text-secondary: #CBD5E1;
+        
+        /* Typography */
+        --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-size-xs: 0.75rem;
+        --font-size-sm: 0.875rem;
+        --font-size-base: 1rem;
+        --font-size-lg: 1.125rem;
+        --font-size-xl: 1.25rem;
+        --font-size-2xl: 1.5rem;
+        --font-size-3xl: 1.875rem;
+        --font-size-4xl: 2.25rem;
+        --font-size-5xl: 3rem;
+        
+        /* Spacing */
+        --spacing-xs: 0.25rem;
+        --spacing-sm: 0.5rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+        --spacing-2xl: 3rem;
+        --spacing-3xl: 4rem;
+        
+        /* Border Radius */
+        --radius-sm: 0.25rem;
+        --radius-md: 0.375rem;
+        --radius-lg: 0.5rem;
+        --radius-xl: 0.75rem;
+        --radius-2xl: 1rem;
+        
+        /* Shadows */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        
+        /* Transitions */
+        --transition-fast: 150ms ease-in-out;
+        --transition-normal: 250ms ease-in-out;
+        --transition-slow: 350ms ease-in-out;
+        
+        /* Layout */
+        --max-width: 1200px;
+        --sidebar-width: 280px;
+        --header-height: 70px;
     }
-  </style>
+    
+    body {
+        font-family: var(--font-family);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        color: var(--dark-text);
+        background: linear-gradient(135deg, var(--dark-bg) 0%, #1E293B 100%);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: var(--spacing-lg);
+        color: var(--white);
+    }
+    
+    h1 {
+        font-size: var(--font-size-4xl);
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    h2 {
+        font-size: var(--font-size-3xl);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: var(--spacing-sm);
+        margin-bottom: var(--spacing-xl);
+    }
+    
+    h3 {
+        font-size: var(--font-size-2xl);
+        color: var(--primary-light);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    p {
+        margin-bottom: var(--spacing-md);
+        color: var(--dark-text-secondary);
+        line-height: 1.7;
+    }
+    
+    a {
+        color: var(--primary-color);
+        text-decoration: none;
+        transition: var(--transition-fast);
+        border-bottom: 1px solid transparent;
+    }
+    
+    a:hover {
+        color: var(--primary-light);
+        border-bottom-color: var(--primary-light);
+    }
+    
+    /* ===== LAYOUT COMPONENTS ===== */
+    .container {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--spacing-lg);
+    }
+    
+    /* ===== NAVIGATION ===== */
+    .navbar {
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--dark-border);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        height: var(--header-height);
+        display: flex;
+        align-items: center;
+    }
+    
+    .navbar .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 0 var(--spacing-lg);
+    }
+    
+    .nav-brand h1 {
+        font-size: var(--font-size-xl);
+        font-weight: 700;
+        color: var(--white);
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0;
+    }
+    
+    .nav-brand .subtitle {
+        font-size: var(--font-size-sm);
+        color: var(--dark-text-secondary);
+        display: block;
+        margin-top: var(--spacing-xs);
+    }
+    
+    .nav-menu {
+        display: flex;
+        gap: var(--spacing-xl);
+        align-items: center;
+    }
+    
+    .nav-link {
+        color: var(--dark-text-secondary);
+        font-weight: 500;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius-lg);
+        transition: var(--transition-fast);
+    }
+    
+    .nav-link:hover {
+        color: var(--white);
+        background: rgba(59, 130, 246, 0.1);
+        border-bottom: none;
+    }
+    
+    /* ===== DROPDOWN NAVIGATION ===== */
+    .nav-dropdown {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .dropdown-toggle {
+        background: none;
+        border: none;
+        color: var(--dark-text-secondary);
+        font-weight: 500;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--radius-lg);
+        transition: var(--transition-fast);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: inherit;
+    }
+    
+    .dropdown-toggle:hover {
+        color: var(--white);
+        background: rgba(59, 130, 246, 0.1);
+    }
+    
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--dark-surface);
+        border: 1px solid var(--dark-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-xl);
+        min-width: 300px;
+        z-index: 1000;
+        padding: var(--spacing-sm);
+    }
+    
+    .nav-dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    .dropdown-content a {
+        display: block;
+        padding: var(--spacing-sm) var(--spacing-md);
+        color: var(--dark-text-secondary);
+        text-decoration: none;
+        border-radius: var(--radius-md);
+        transition: var(--transition-fast);
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .dropdown-content a:hover {
+        background: rgba(59, 130, 246, 0.1);
+        color: var(--primary-light);
+    }
+    
+    .nav-toggle {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+        gap: 4px;
+    }
+    
+    .nav-toggle span {
+        width: 25px;
+        height: 3px;
+        background: var(--white);
+        border-radius: 2px;
+        transition: var(--transition-fast);
+    }
+    
+    /* ===== MAIN CONTENT ===== */
+    .main-content {
+        margin-top: var(--header-height);
+        min-height: calc(100vh - var(--header-height));
+        padding: var(--spacing-2xl) 0;
+    }
+    
+    /* ===== HERO SECTION ===== */
+    .hero-section {
+        text-align: center;
+        padding: var(--spacing-3xl) 0;
+        background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-2) 100%);
+        border-radius: var(--radius-2xl);
+        margin-bottom: var(--spacing-3xl);
+        border: 1px solid var(--dark-border);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .hero-content h1 {
+        font-size: var(--font-size-5xl);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .hero-subtitle {
+        font-size: var(--font-size-xl);
+        color: var(--dark-text-secondary);
+        margin-bottom: var(--spacing-2xl);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: var(--spacing-2xl);
+        margin-bottom: var(--spacing-2xl);
+    }
+    
+    .stat {
+        text-align: center;
+    }
+    
+    .stat-number {
+        display: block;
+        font-size: var(--font-size-3xl);
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: var(--spacing-xs);
+    }
+    
+    .stat-label {
+        font-size: var(--font-size-sm);
+        color: var(--dark-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .hero-actions {
+        display: flex;
+        gap: var(--spacing-lg);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /* ===== BUTTONS ===== */
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-sm);
+        padding: var(--spacing-md) var(--spacing-lg);
+        border-radius: var(--radius-lg);
+        font-weight: 600;
+        text-decoration: none;
+        transition: var(--transition-fast);
+        border: 2px solid transparent;
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: var(--white);
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        border-bottom: none;
+    }
+    
+    .btn-secondary {
+        background: transparent;
+        color: var(--dark-text-secondary);
+        border-color: var(--dark-border);
+    }
+    
+    .btn-secondary:hover {
+        background: var(--dark-surface-2);
+        color: var(--white);
+        border-color: var(--primary-color);
+        border-bottom: none;
+    }
+    
+    /* ===== OVERVIEW SECTION ===== */
+    .overview-section {
+        margin-bottom: var(--spacing-3xl);
+    }
+    
+    .overview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-xl);
+        margin-top: var(--spacing-xl);
+    }
+    
+    .overview-card {
+        background: var(--dark-surface);
+        border-radius: var(--radius-xl);
+        padding: var(--spacing-xl);
+        border: 1px solid var(--dark-border);
+        transition: var(--transition-fast);
+        text-align: center;
+    }
+    
+    .overview-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary-color);
+    }
+    
+    .overview-icon {
+        font-size: var(--font-size-4xl);
+        margin-bottom: var(--spacing-md);
+        display: block;
+    }
+    
+    .overview-card h3 {
+        color: var(--white);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .overview-card p {
+        color: var(--dark-text-secondary);
+        line-height: 1.6;
+    }
+    
+    /* ===== CHAPTERS SECTION ===== */
+    .chapters-section {
+        margin-bottom: var(--spacing-3xl);
+    }
+    
+    .chapters-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: var(--spacing-xl);
+        margin-top: var(--spacing-xl);
+    }
+    
+    .chapter-card {
+        background: var(--dark-surface);
+        border-radius: var(--radius-xl);
+        padding: var(--spacing-xl);
+        border: 1px solid var(--dark-border);
+        transition: var(--transition-fast);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .chapter-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    }
+    
+    .chapter-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--primary-color);
+    }
+    
+    .chapter-number {
+        background: var(--primary-color);
+        color: var(--white);
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: var(--font-size-lg);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .chapter-card h3 {
+        color: var(--white);
+        margin-bottom: var(--spacing-md);
+        font-size: var(--font-size-lg);
+    }
+    
+    .chapter-card p {
+        color: var(--dark-text-secondary);
+        margin-bottom: var(--spacing-lg);
+        line-height: 1.6;
+    }
+    
+    .chapter-meta {
+        display: flex;
+        gap: var(--spacing-md);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .difficulty {
+        background: var(--accent-color);
+        color: var(--gray-900);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-xs);
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+    
+    .duration {
+        background: var(--dark-surface-2);
+        color: var(--dark-text-secondary);
+        padding: var(--spacing-xs) var(--spacing-sm);
+        border-radius: var(--radius-md);
+        font-size: var(--font-size-xs);
+        font-weight: 500;
+    }
+    
+    .chapter-link {
+        color: var(--primary-color);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        transition: var(--transition-fast);
+    }
+    
+    .chapter-link:hover {
+        color: var(--primary-light);
+        transform: translateX(4px);
+        border-bottom: none;
+    }
+    
+    /* ===== FEATURES SECTION ===== */
+    .features-section {
+        margin-bottom: var(--spacing-3xl);
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: var(--spacing-xl);
+        margin-top: var(--spacing-xl);
+    }
+    
+    .feature-card {
+        background: var(--dark-surface);
+        border-radius: var(--radius-xl);
+        padding: var(--spacing-xl);
+        border: 1px solid var(--dark-border);
+        transition: var(--transition-fast);
+        text-align: center;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-xl);
+        border-color: var(--secondary-color);
+    }
+    
+    .feature-icon {
+        font-size: var(--font-size-4xl);
+        margin-bottom: var(--spacing-md);
+        display: block;
+    }
+    
+    .feature-card h3 {
+        color: var(--white);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .feature-card p {
+        color: var(--dark-text-secondary);
+        line-height: 1.6;
+    }
+    
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+        background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-2) 100%);
+        border-radius: var(--radius-2xl);
+        padding: var(--spacing-3xl);
+        text-align: center;
+        border: 1px solid var(--dark-border);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    .cta-content h2 {
+        font-size: var(--font-size-3xl);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .cta-content p {
+        font-size: var(--font-size-lg);
+        color: var(--dark-text-secondary);
+        margin-bottom: var(--spacing-2xl);
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .cta-actions {
+        display: flex;
+        gap: var(--spacing-lg);
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    /* ===== FOOTER ===== */
+    .footer {
+        background: var(--dark-surface);
+        border-top: 1px solid var(--dark-border);
+        padding: var(--spacing-2xl) 0;
+        margin-top: var(--spacing-3xl);
+    }
+    
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: var(--spacing-xl);
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .footer-section h4 {
+        color: var(--white);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .footer-section p {
+        color: var(--dark-text-secondary);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .footer-section ul {
+        list-style: none;
+    }
+    
+    .footer-section li {
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    .footer-section a {
+        color: var(--dark-text-secondary);
+        transition: var(--transition-fast);
+    }
+    
+    .footer-section a:hover {
+        color: var(--primary-color);
+        border-bottom: none;
+    }
+    
+    .social-links {
+        display: flex;
+        gap: var(--spacing-md);
+    }
+    
+    .social-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+        background: var(--dark-surface-2);
+        border-radius: var(--radius-md);
+        transition: var(--transition-fast);
+    }
+    
+    .social-link:hover {
+        background: var(--primary-color);
+        color: var(--white);
+        border-bottom: none;
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding-top: var(--spacing-lg);
+        border-top: 1px solid var(--dark-border);
+        color: var(--dark-text-secondary);
+    }
+    
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 768px) {
+        .nav-menu {
+            display: none;
+        }
+        
+        .nav-menu.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--dark-surface);
+            border: 1px solid var(--dark-border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            padding: var(--spacing-lg);
+            z-index: 1000;
+        }
+        
+        .nav-dropdown {
+            width: 100%;
+        }
+        
+        .dropdown-content {
+            position: static;
+            display: none;
+            box-shadow: none;
+            border: none;
+            background: transparent;
+            padding: var(--spacing-sm) 0;
+        }
+        
+        .nav-dropdown:hover .dropdown-content,
+        .nav-dropdown.active .dropdown-content {
+            display: block;
+        }
+        
+        .nav-toggle {
+            display: flex;
+        }
+        
+        .hero-content h1 {
+            font-size: var(--font-size-3xl);
+        }
+        
+        .hero-stats {
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+        
+        .hero-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .chapters-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .features-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-actions {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .container {
+            padding: 0 var(--spacing-md);
+        }
+        
+        .hero-section {
+            padding: var(--spacing-xl) 0;
+        }
+        
+        .cta-section {
+            padding: var(--spacing-xl);
+        }
+    }
+    </style>
 </head>
 <body>
-  <main class="wrap">
-    <nav class="top-links">
-      <a href="funding.html">🏠 Home</a>
-      <a href="48lms/grant-storyboard-comic-display.html">📖 Grant Comic Display</a>
-      <a href="48lms/grant-storyboard-comic-generator.html">🎨 Grant Comic Generator</a>
-      <a href="48lms/grant-workflow-storyboard-frames.html">📋 Grant Workflow Frames</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h1>System Design & Python</h1>
+                <span class="subtitle">Complete Development Guide</span>
+            </div>
+            <div class="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <div class="nav-dropdown">
+                    <button class="nav-link dropdown-toggle">Chapters</button>
+                    <div class="dropdown-content">
+                        <a href="01-setting-up-python.html">Chapter 1: Setting Up Python</a>
+                        <a href="02-using-chatgpt.html">Chapter 2: Using ChatGPT</a>
+                        <a href="03-using-cursor.html">Chapter 3: Using Cursor</a>
+                        <a href="04-database-design-fundamentals.html">Chapter 4: Database Design</a>
+                        <a href="05-advanced-data-modeling.html">Chapter 5: Advanced Data Modeling</a>
+                        <a href="06-systems-design-principles.html">Chapter 6: Systems Design</a>
+                        <a href="07-building-fullstack-flask.html">Chapter 7: Building Flask Apps</a>
+                        <a href="08-network-troubleshooting.html">Chapter 8: Network Troubleshooting</a>
+                        <a href="09-application-debugging.html">Chapter 9: Application Debugging</a>
+                        <a href="10-algorithmic-thinking.html">Chapter 10: Algorithmic Thinking</a>
+                        <a href="11-testing-strategies.html">Chapter 11: Testing Strategies</a>
+                        <a href="12-security-fundamentals.html">Chapter 12: Security Fundamentals</a>
+                        <a href="13-deployment-devops.html">Chapter 13: Deployment & DevOps</a>
+                        <a href="14-advanced-topics.html">Chapter 14: Advanced Topics</a>
+                    </div>
+                </div>
+                <a href="resources.html" class="nav-link">Resources</a>
+                <a href="about.html" class="nav-link">About</a>
+            </div>
+            <div class="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     </nav>
-    <section class="hero">
-      <div class="eyebrow">Funding-Ready Narrative & Plan</div>
-      <h1>Sunrise Fairs</h1>
-      <p class="subtitle">Resilient, solar-powered community fairs delivering STEAM (Science, Technology, Engineering, Arts, Math) education, arts access, and green innovation across King County.</p>
-      <div class="chips">
-        <span class="chip">Equity & Access</span>
-        <span class="chip">STEAM + Arts</span>
-        <span class="chip">Sustainability</span>
-        <span class="chip">Community Resilience</span>
-        <span class="chip">Auburn Launch • March 2026</span>
-      </div>
-      
-      <!-- Hero Image Placeholder -->
-      <div class="hero-image" style="margin-top: 24px; text-align: center; padding: 20px; background: rgba(125,211,252,.05); border: 2px dashed rgba(125,211,252,.3); border-radius: 12px;">
-        <img src="image.png" alt="A vibrant, diverse community fair in a sunny park setting with solar panels powering colorful STEAM workshops. Families of all backgrounds engaging in hands-on activities - children building circuits, teens creating solar art, adults learning about green technology. Bright, optimistic lighting with solar-powered LED lights, sustainable materials, and a warm, inclusive atmosphere." style="width: 100%; max-width: 800px; height: auto; border-radius: 8px; margin-bottom: 12px;">
-        <p style="color: var(--muted); font-size: 0.9rem; margin: 0;">
-          <strong>HERO IMAGE PROMPT:</strong><br/>
-          "A vibrant, diverse community fair in a sunny park setting with solar panels powering colorful STEAM workshops. Families of all backgrounds engaging in hands-on activities - children building circuits, teens creating solar art, adults learning about green technology. Bright, optimistic lighting with solar-powered LED lights, sustainable materials, and a warm, inclusive atmosphere. Professional photography style, high resolution, inspiring and accessible."
-        </p>
-      </div>
-    </section>
 
-    <section class="grid" style="margin-top:20px">
-      <article class="card">
-        <h2>Executive Summary</h2>
-        <div class="two-col">
-          <p><strong>Sunrise Fairs</strong> is a new nonprofit initiative that produces free or low-cost, solar-powered pop-up fairs to teach sustainability and STEAM—intentionally centering youth arts education and community resilience. We will operate county-wide with a first fair slated for <strong>Auburn, WA in March 2026</strong> and a broader programming runway beginning <strong>January 2026</strong>.</p>
-          <p>Events combine interactive workshops, art-making, green-tech demonstrations, and a marketplace featuring local creators and climate-forward entrepreneurs. Our focus is on underserved families and schools in King County who face cost, transportation, or opportunity barriers to STEAM and cultural learning.</p>
-          <p>The requested funding supports a three-year growth plan to deliver multiple fairs annually, build school and nonprofit partnerships, and establish a repeatable model. <span class="badge">Budget plan: $180,000 over 3 years ($60,000/yr)</span> managed with transparent milestones and outcomes.</p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1>System Design & Python Development</h1>
+                    <p class="hero-subtitle">A comprehensive guide to building scalable applications with Python and modern web technologies</p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">14</span>
+                            <span class="stat-label">Chapters</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">3000+</span>
+                            <span class="stat-label">Words per Chapter</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Code Examples</span>
+                        </div>
+                    </div>
+                    <div class="hero-actions">
+                        <a href="01-setting-up-python.html" class="btn btn-primary">Start Reading</a>
+                        <a href="#chapters" class="btn btn-secondary">Browse Chapters</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Overview Section -->
+            <section class="overview-section">
+                <h2>What You'll Learn</h2>
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="overview-icon">🐍</div>
+                        <h3>Python Fundamentals</h3>
+                        <p>Master Python setup, virtual environments, and essential packages for web development.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">🤖</div>
+                        <h3>AI-Assisted Development</h3>
+                        <p>Learn to use ChatGPT and Cursor for code design, planning, and development.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">🗄️</div>
+                        <h3>Database Design</h3>
+                        <p>Understand database modeling, normalization, and advanced data architectures.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">🏗️</div>
+                        <h3>System Architecture</h3>
+                        <p>Design scalable, maintainable systems with modern architectural patterns.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">🔧</div>
+                        <h3>Full-Stack Development</h3>
+                        <p>Build complete web applications with Flask, databases, and modern frontend tools.</p>
+                    </div>
+                    <div class="overview-card">
+                        <div class="overview-icon">🚀</div>
+                        <h3>Deployment & DevOps</h3>
+                        <p>Deploy applications to production with Docker, Kubernetes, and cloud platforms.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chapters Section -->
+            <section id="chapters" class="chapters-section">
+                <h2>All Chapters</h2>
+                <div class="chapters-grid">
+                    <div class="chapter-card">
+                        <div class="chapter-number">1</div>
+                        <h3>Setting Up Python on Mac & PC</h3>
+                        <p>Complete environment setup and configuration for Python development.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Beginner</span>
+                            <span class="duration">30 min</span>
+                        </div>
+                        <a href="01-setting-up-python.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">2</div>
+                        <h3>Using ChatGPT to Design and Plan Code</h3>
+                        <p>AI-assisted development techniques and effective prompting strategies.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Beginner</span>
+                            <span class="duration">35 min</span>
+                        </div>
+                        <a href="02-using-chatgpt.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">3</div>
+                        <h3>Using Cursor with Python for System Design</h3>
+                        <p>AI-powered code editor mastery and advanced development workflows.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Beginner</span>
+                            <span class="duration">40 min</span>
+                        </div>
+                        <a href="03-using-cursor.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">4</div>
+                        <h3>Database Design Fundamentals</h3>
+                        <p>Data modeling, normalization, and Entity-Relationship Diagrams.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="duration">45 min</span>
+                        </div>
+                        <a href="04-database-design-fundamentals.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">5</div>
+                        <h3>Advanced Data Modeling & Storage Strategy</h3>
+                        <p>Complex database architectures, partitioning, and replication strategies.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="duration">50 min</span>
+                        </div>
+                        <a href="05-advanced-data-modeling.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">6</div>
+                        <h3>Systems Design Principles</h3>
+                        <p>Scalable architecture patterns and design principles for robust systems.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="duration">55 min</span>
+                        </div>
+                        <a href="06-systems-design-principles.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">7</div>
+                        <h3>Building a Full-Stack App with Flask</h3>
+                        <p>Complete web application development with Flask and modern tools.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="duration">60 min</span>
+                        </div>
+                        <a href="07-building-fullstack-flask.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">8</div>
+                        <h3>Network & Infrastructure Troubleshooting</h3>
+                        <p>Diagnostic tools and systematic troubleshooting methodologies.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="duration">40 min</span>
+                        </div>
+                        <a href="08-network-troubleshooting.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">9</div>
+                        <h3>Application Debugging & Optimization</h3>
+                        <p>Advanced debugging techniques and performance optimization strategies.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="duration">45 min</span>
+                        </div>
+                        <a href="09-application-debugging.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">10</div>
+                        <h3>Algorithmic Thinking & Problem Solving</h3>
+                        <p>Systematic problem-solving approaches and algorithm design.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="duration">50 min</span>
+                        </div>
+                        <a href="10-algorithmic-thinking.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">11</div>
+                        <h3>Testing Strategies & Quality Assurance</h3>
+                        <p>Comprehensive testing methodologies and quality assurance practices.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="duration">45 min</span>
+                        </div>
+                        <a href="11-testing-strategies.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">12</div>
+                        <h3>Security Fundamentals & Threat Modeling</h3>
+                        <p>Application security principles and threat modeling techniques.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="duration">50 min</span>
+                        </div>
+                        <a href="12-security-fundamentals.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">13</div>
+                        <h3>Deployment & DevOps</h3>
+                        <p>Containerization, cloud deployment, and infrastructure as code.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="duration">55 min</span>
+                        </div>
+                        <a href="13-deployment-devops.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                    <div class="chapter-card">
+                        <div class="chapter-number">14</div>
+                        <h3>Advanced Topics & Future Trends</h3>
+                        <p>Explore microservices, serverless architecture, and emerging technologies.</p>
+                        <div class="chapter-meta">
+                            <span class="difficulty">Expert</span>
+                            <span class="duration">45 min</span>
+                        </div>
+                        <a href="14-advanced-topics.html" class="chapter-link">Read Chapter →</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <h2>Why This Book?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Comprehensive Coverage</h3>
+                        <p>From basic Python setup to advanced system design, covering everything you need to build production applications.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💻</div>
+                        <h3>Practical Examples</h3>
+                        <p>Real-world code examples and hands-on exercises that you can immediately apply to your projects.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>AI Integration</h3>
+                        <p>Learn how to effectively use AI tools like ChatGPT and Cursor to enhance your development workflow.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏗️</div>
+                        <h3>System Design Focus</h3>
+                        <p>Emphasis on scalable architecture, database design, and system principles for building robust applications.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Modern Tools</h3>
+                        <p>Coverage of the latest development tools, frameworks, and best practices used in industry.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Production Ready</h3>
+                        <p>Learn deployment, monitoring, and DevOps practices to take your applications to production.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2>Ready to Master System Design & Python Development?</h2>
+                    <p>Start your journey with Chapter 1 and build the foundation for creating scalable, production-ready applications.</p>
+                    <div class="cta-actions">
+                        <a href="01-setting-up-python.html" class="btn btn-primary">Start Reading Now</a>
+                        <a href="resources.html" class="btn btn-secondary">View Resources</a>
+                    </div>
+                </div>
+            </section>
         </div>
-        <div class="kpi">
-          <div class="item"><div class="n">3 Years</div><div class="t">Seed runway (phased rollout)</div></div>
-          <div class="item"><div class="n">4–6</div><div class="t">Fairs per year by Year 3</div></div>
-          <div class="item"><div class="n">60%+</div><div class="t">Free/low-cost participation</div></div>
-          <div class="item"><div class="n">25–40</div><div class="t">Workshops per annual cycle</div></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>System Design & Python Development</h4>
+                    <p>A comprehensive guide to building scalable applications with Python and modern web technologies.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="resources.html">Resources</a></li>
+                        <li><a href="about.html">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">GitHub</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 System Design & Python Development. All rights reserved.</p>
+            </div>
         </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+    // Main JavaScript functionality
+    (function() {
+        'use strict';
         
-        <!-- KPI Visualization Image -->
-        <div class="kpi-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(167,139,250,.05); border: 2px dashed rgba(167,139,250,.3); border-radius: 12px;">
-          <img src="image1.png" alt="An infographic-style illustration showing growth metrics: a timeline from 2026-2028 with increasing numbers of solar-powered fairs, diverse family participation charts, workshop count progression, and community impact indicators. Clean, modern design with solar energy motifs, inclusive iconography, and clear data visualization. Professional business presentation style." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-          <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-            <strong>KPI VISUALIZATION PROMPT:</strong><br/>
-            "An infographic-style illustration showing growth metrics: a timeline from 2026-2028 with increasing numbers of solar-powered fairs, diverse family participation charts, workshop count progression, and community impact indicators. Clean, modern design with solar energy motifs, inclusive iconography, and clear data visualization. Professional business presentation style."
-          </p>
-        </div>
-      </article>
-
-      <aside class="card">
-        <h2>Contact & Org</h2>
-        <p><strong>Primary Contact:</strong> Crystal Bell — <a href="mailto:ctbell2017@gmail.com">ctbell2017@gmail.com</a><br/>
-           <strong>Fiscal Sponsor:</strong> Key Tech Labs<br/>
-           <strong>Discipline:</strong> Science & Technology, Arts & Culture</p>
-        <h3>Key People</h3>
-        <ul class="list">
-          <li><strong>Jessica Ballard Thiessen</strong>, Founder & Executive Director</li>
-          <li><strong>Afrika Vedela</strong>, Operations Lead</li>
-          <li><strong>Reco Bembry</strong>, Event Coordinator</li>
-          <li><strong>Crystal Bell</strong>, Grants & Partnerships Lead (10+ yrs grant mgmt.)</li>
-        </ul>
-        <h3>Status</h3>
-        <ul class="list">
-          <li><strong>State Incorporation:</strong> In progress; to be incorporated in WA; operations in King County.</li>
-          <li><strong>Federal Recognition:</strong> Fiscal sponsorship in process (contract pending).</li>
-          <li><strong>4Culture Account:</strong> Profile completion in progress (deadline: Aug 14, 2025).</li>
-        </ul>
-      </aside>
-    </section>
-
-    <article class="card" style="margin-top:18px">
-      <h2>Vision, Need, and Community Alignment</h2>
-      <div class="two-col">
-        <p><strong>Vision:</strong> A resilient, creative King County where families—especially those historically underserved—engage in hands-on STEAM and arts learning that inspires climate literacy, career curiosity, and civic pride.</p>
-        <p><strong>Community Need:</strong> Many families experience cost, transportation, and access barriers to enrichment. Sunrise Fairs addresses these by bringing the programming to neighborhoods, keeping events free or low-cost, and partnering with schools and local groups. Workshops and demos will reflect community voices, languages, and cultures.</p>
-        <p><strong>Public Benefits:</strong> Expanded access to STEAM and arts education; opportunities for young people to create, tinker, and perform; local green-tech exposure; and county-wide programming beyond Seattle to reach Auburn and additional cities.</p>
-      </div>
-      <div class="callout"><strong>Equity Promise:</strong> At least 60% of all attendance opportunities will be free or subsidized; we will co-design at least 30% of workshops with community partners to reflect local priorities and cultures.</div>
-      
-      <!-- Community Impact Image -->
-      <div class="community-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(52,211,153,.05); border: 2px dashed rgba(52,211,153,.3); border-radius: 12px;">
-        <img src="image2.png" alt="A heartwarming scene of diverse families from different cultural backgrounds working together at STEAM workshops. Children of various ages collaborating on solar-powered projects, parents learning alongside them, community leaders facilitating activities. The setting shows accessibility features - multilingual signs, wheelchair ramps, ASL interpreters. Warm, inclusive lighting with a sense of belonging and empowerment." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>COMMUNITY IMPACT PROMPT:</strong><br/>
-          "A heartwarming scene of diverse families from different cultural backgrounds working together at STEAM workshops. Children of various ages collaborating on solar-powered projects, parents learning alongside them, community leaders facilitating activities. The setting shows accessibility features - multilingual signs, wheelchair ramps, ASL interpreters. Warm, inclusive lighting with a sense of belonging and empowerment."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Program Model</h2>
-      <div class="two-col">
-        <p>Each fair includes three braided experiences:</p>
-        <ol class="list">
-          <li><strong>Solar-Powered Showcase:</strong> Demonstrations of off-grid energy, mobile solar stations, and hands-on sustainability exhibits.</li>
-          <li><strong>STEAM + Arts Workshops:</strong> Youth-friendly sessions (e.g., solar art, circuits & wearables, climate storytelling, maker stations) with a clear learning outcome and take-home artifact.</li>
-          <li><strong>Green Marketplace:</strong> Tables featuring local artists, cultural groups, and climate-forward vendors; micro-stages for student showcases and community performances.</li>
-        </ol>
-        <p>Accessibility supports include transit-friendly site selection, ADA-aware layout, multilingual signage, and community ambassador roles for outreach and wayfinding.</p>
-      </div>
-      
-      <!-- Program Model Image -->
-      <div class="program-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(34,211,238,.05); border: 2px dashed rgba(34,211,238,.3); border-radius: 12px;">
-        <img src="image3.png" alt="A three-panel illustration showing the braided experiences: 1) Solar-powered showcase with mobile solar stations and energy demonstrations, 2) STEAM workshops with youth creating circuits, solar art, and climate storytelling projects, 3) Green marketplace with local artists, cultural groups, and sustainable vendors. Each panel shows diverse participation and hands-on learning. Clean, educational illustration style." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>PROGRAM MODEL PROMPT:</strong><br/>
-          "A three-panel illustration showing the braided experiences: 1) Solar-powered showcase with mobile solar stations and energy demonstrations, 2) STEAM workshops with youth creating circuits, solar art, and climate storytelling projects, 3) Green marketplace with local artists, cultural groups, and sustainable vendors. Each panel shows diverse participation and hands-on learning. Clean, educational illustration style."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Goals, Outcomes & KPIs</h2>
-      <p>We track outcomes against three lenses—<em>Access & Equity</em>, <em>Learning & Creativity</em>, and <em>Resilience & Sustainability</em>.</p>
-
-      <div class="goal">
-        <h4>G1 · Access & Equity</h4>
-        <ul class="list">
-          <li><strong>Outcome:</strong> Reduce barriers for underserved families to engage with STEAM and arts.</li>
-          <li><strong>KPIs:</strong> ≥60% of opportunities free/low-cost; ≥3 new neighborhood partners per year; ≥70% of attendees report events as accessible and welcoming.</li>
-        </ul>
-        <div class="progress" title="Target completion plan"><i style="--w:66%"></i></div>
-      </div>
-
-      <div class="goal">
-        <h4>G2 · Learning & Creativity</h4>
-        <ul class="list">
-          <li><strong>Outcome:</strong> Increase hands-on STEAM engagement and creative confidence among youth.</li>
-          <li><strong>KPIs:</strong> 25–40 workshops/year by Year 3; ≥75% of youth demonstrate skill gain via quick-check rubrics; ≥2 youth showcases per fair.</li>
-        </ul>
-        <div class="progress"><i style="--w:58%"></i></div>
-      </div>
-
-      <div class="goal">
-        <h4>G3 · Resilience & Sustainability</h4>
-        <ul class="list">
-          <li><strong>Outcome:</strong> Improve climate literacy and community preparedness via solar demos and maker activities.</li>
-          <li><strong>KPIs:</strong> ≥1 solar demo per fair; ≥1 resilience micro-talk per fair; ≥65% attendee intent to adopt a sustainable practice (post-event survey).</li>
-        </ul>
-        <div class="progress"><i style="--w:52%"></i></div>
-      </div>
-      
-      <!-- Goals Progress Image -->
-      <div class="goals-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(245,158,11,.05); border: 2px dashed rgba(245,158,11,.3); border-radius: 12px;">
-        <img src="image4.png" alt="A visual representation of the three goal areas with progress indicators: Access & Equity showing diverse family participation and accessibility features, Learning & Creativity displaying youth skill development and creative projects, Resilience & Sustainability illustrating solar demos and climate literacy activities. Each section shows before/after scenarios and measurable outcomes. Modern dashboard style with clear metrics." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>GOALS PROGRESS PROMPT:</strong><br/>
-          "A visual representation of the three goal areas with progress indicators: Access & Equity showing diverse family participation and accessibility features, Learning & Creativity displaying youth skill development and creative projects, Resilience & Sustainability illustrating solar demos and climate literacy activities. Each section shows before/after scenarios and measurable outcomes. Modern dashboard style with clear metrics."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Three-Year Workplan & Timeline</h2>
-      <table class="table">
-        <thead><tr><th>Phase</th><th>Timeframe</th><th>Milestones</th><th>Outputs</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>Phase 0 · Setup</strong></td>
-            <td>Q4 2025</td>
-            <td>Finalize fiscal sponsorship; WA incorporation in motion; venue scouting; partner MOUs</td>
-            <td>Ops checklist; draft workshop catalog; safety plan; DEI access plan</td>
-          </tr>
-          <tr>
-            <td><strong>Phase 1 · Pilot</strong></td>
-            <td>Q1–Q2 2026</td>
-            <td>First fair in Auburn (Mar 2026); post-event evaluation; iterate logistics</td>
-            <td>1–2 fairs; ≥12 workshops; baseline metrics established</td>
-          </tr>
-          <tr>
-            <td><strong>Phase 2 · Expansion</strong></td>
-            <td>Q3–Q4 2026</td>
-            <td>New city partnerships; educator cohort training; multilingual assets</td>
-            <td>2–3 fairs; ≥16 workshops; vendor roster & school partners scaled</td>
-          </tr>
-          <tr>
-            <td><strong>Phase 3 · Scale</strong></td>
-            <td>2027–2028</td>
-            <td>4–6 fairs per year; mobile solar kit enhancements; county-wide circuit</td>
-            <td>Annual playbook; 25–40 workshops/yr; robust impact reporting</td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <!-- Timeline Visualization Image -->
-      <div class="timeline-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(125,211,252,.05); border: 2px dashed rgba(125,211,252,.3); border-radius: 12px;">
-        <img src="image5.png" alt="A horizontal timeline illustration showing the three-year journey: Phase 0 (Setup) with planning documents and partnerships, Phase 1 (Pilot) with the first Auburn fair, Phase 2 (Expansion) with multiple city events, Phase 3 (Scale) with county-wide impact. Each phase shows key milestones, growing participation numbers, and expanding solar infrastructure. Professional project management style with clear progression indicators." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>TIMELINE VISUALIZATION PROMPT:</strong><br/>
-          "A horizontal timeline illustration showing the three-year journey: Phase 0 (Setup) with planning documents and partnerships, Phase 1 (Pilot) with the first Auburn fair, Phase 2 (Expansion) with multiple city events, Phase 3 (Scale) with county-wide impact. Each phase shows key milestones, growing participation numbers, and expanding solar infrastructure. Professional project management style with clear progression indicators."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Budget Framework (Summary)</h2>
-      <p><strong>Total:</strong> $180,000 over 3 years ($60,000 per year). Final line items will be provided in the full RFP budget, with grants-managed controls and quarterly reporting.</p>
-      <table class="table">
-        <thead><tr><th>Category</th><th>Year 1</th><th>Year 2</th><th>Year 3</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>Personnel & Stipends</td><td>$22,000</td><td>$22,000</td><td>$22,000</td><td>Workshop leads, community ambassadors, ops</td></tr>
-          <tr><td>Program & Materials</td><td>$14,500</td><td>$14,500</td><td>$14,500</td><td>Solar kits, art supplies, safety & accessibility</td></tr>
-          <tr><td>Venue & Logistics</td><td>$9,500</td><td>$9,500</td><td>$9,500</td><td>Parks/permits, insurance, rentals, ADA</td></tr>
-          <tr><td>Outreach & Translation</td><td>$5,000</td><td>$5,000</td><td>$5,000</td><td>Multilingual materials, community media</td></tr>
-          <tr><td>Evaluation & Data</td><td>$3,000</td><td>$3,000</td><td>$3,000</td><td>Surveys, dashboards, reporting</td></tr>
-          <tr><td>Admin/FS (sponsor)</td><td>$6,000</td><td>$6,000</td><td>$6,000</td><td>Fiscal sponsor fee & compliance</td></tr>
-        </tbody>
-      </table>
-      <p class="callout"><strong>Leverage:</strong> We will braid funds with in-kind support (venues, materials, volunteer hours) and aligned micro-grants. Each fair will target at least two in-kind partners.</p>
-      
-      <!-- Budget Visualization Image -->
-      <div class="budget-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(167,139,250,.05); border: 2px dashed rgba(167,139,250,.3); border-radius: 12px;">
-        <img src="image6.png" alt="A clean financial infographic showing the $180,000 budget breakdown over three years: pie charts for each year showing Personnel, Program Materials, Venue & Logistics, Outreach, Evaluation, and Admin costs. Visual elements include solar panels representing sustainability investments, diverse people icons for personnel, and community symbols for outreach. Professional financial presentation style with clear cost allocation." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>BUDGET VISUALIZATION PROMPT:</strong><br/>
-          "A clean financial infographic showing the $180,000 budget breakdown over three years: pie charts for each year showing Personnel, Program Materials, Venue & Logistics, Outreach, Evaluation, and Admin costs. Visual elements include solar panels representing sustainability investments, diverse people icons for personnel, and community symbols for outreach. Professional financial presentation style with clear cost allocation."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Partnerships, Outreach & Access</h2>
-      <div class="two-col">
-        <p><strong>Partnership Strategy:</strong> Formal MOUs with schools, youth-serving organizations, cultural groups, libraries, and parks. Vendor mix prioritizes local artists and sustainability-forward makers. We will host educator roundtables to co-design youth workshops and align with classroom needs.</p>
-        <p><strong>Outreach Channels:</strong> 4Culture events (Hello 4Culture, Doors Open Share Outs, Launch Outreach), community radio and newsletters, multilingual flyers, faith/community hubs, and youth leadership councils. Community ambassadors will support door-to-door flyering and event-day wayfinding.</p>
-        <p><strong>Access Commitments:</strong> Transit-first sites; ADA-aware layouts; ASL/interpretation as needed; childcare corner at larger events; sliding-scale for vendor fees; reserved free workshop seats for Title I schools.</p>
-      </div>
-      
-      <!-- Partnership Network Image -->
-      <div class="partnership-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(34,211,238,.05); border: 2px dashed rgba(34,211,238,.3); border-radius: 12px;">
-        <img src="image7.png" alt="A network diagram showing interconnected partnerships: schools, youth organizations, cultural groups, libraries, parks, and community hubs all connected to Sunrise Fairs at the center. Each connection shows collaboration types - workshops, venues, outreach, cultural programming. Diverse community representatives and sustainable symbols throughout. Clean network visualization style with clear relationship mapping." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>PARTNERSHIP NETWORK PROMPT:</strong><br/>
-          "A network diagram showing interconnected partnerships: schools, youth organizations, cultural groups, libraries, parks, and community hubs all connected to Sunrise Fairs at the center. Each connection shows collaboration types - workshops, venues, outreach, cultural programming. Diverse community representatives and sustainable symbols throughout. Clean network visualization style with clear relationship mapping."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Risk Management & Safety</h2>
-      <ul class="list">
-        <li><strong>Operational:</strong> Weather and power contingencies with tenting, battery redundancy, and rescheduling windows.</li>
-        <li><strong>Safety:</strong> First-aid, volunteer training, child-safety protocol for youth workshops, vendor safety checklist.</li>
-        <li><strong>Financial:</strong> Phased commitments; go/no-go gates 60 days pre-event; transparent cost tracking.</li>
-        <li><strong>Reputation:</strong> Feedback channels; community advisory input; rapid iteration after each event.</li>
-      </ul>
-      
-      <!-- Safety & Risk Management Image -->
-      <div class="safety-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(251,113,133,.05); border: 2px dashed rgba(251,113,133,.3); border-radius: 12px;">
-        <img src="image8.png" alt="A comprehensive safety planning illustration showing: weather contingency with tents and battery backup, first-aid stations and volunteer training, child-safety protocols for youth workshops, vendor safety checklists, and emergency response procedures. The scene shows a well-organized fair with clear safety signage, trained volunteers, and backup systems. Professional safety planning style with clear protocols." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>SAFETY & RISK MANAGEMENT PROMPT:</strong><br/>
-          "A comprehensive safety planning illustration showing: weather contingency with tents and battery backup, first-aid stations and volunteer training, child-safety protocols for youth workshops, vendor safety checklists, and emergency response procedures. The scene shows a well-organized fair with clear safety signage, trained volunteers, and backup systems. Professional safety planning style with clear protocols."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Measurement & Evaluation</h2>
-      <p>We will report outcomes quarterly and annually, blending quantitative metrics with qualitative stories.</p>
-      <table class="table">
-        <thead><tr><th>Dimension</th><th>Indicators</th><th>Methods</th><th>Cadence</th></tr></thead>
-        <tbody>
-          <tr><td>Access & Equity</td><td>% free/low-cost, partner count, geographic spread</td><td>Registration data, partner MOUs, ZIP analysis</td><td>Quarterly</td></tr>
-          <tr><td>Learning & Creativity</td><td>Workshop completions, skill-gain rubrics, youth showcases</td><td>Facilitator rubrics, artifact reviews, photos</td><td>Per event</td></tr>
-          <tr><td>Resilience & Sustainability</td><td>Solar demos held, sustainability pledges</td><td>On-site logs, exit surveys</td><td>Per event</td></tr>
-          <tr><td>Community Voice</td><td>Feedback volume & sentiment</td><td>Surveys, interview snippets</td><td>Per event + annual</td></tr>
-        </tbody>
-      </table>
-      
-      <!-- Evaluation Dashboard Image -->
-      <div class="evaluation-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(52,211,153,.05); border: 2px dashed rgba(52,211,153,.3); border-radius: 12px;">
-        <img src="image9.png" alt="A modern analytics dashboard showing real-time evaluation metrics: participation rates, skill development tracking, community feedback sentiment, sustainability impact measurements, and geographic reach data. The dashboard includes interactive charts, progress indicators, and qualitative feedback snippets. Clean data visualization style with clear metrics and actionable insights." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>EVALUATION DASHBOARD PROMPT:</strong><br/>
-          "A modern analytics dashboard showing real-time evaluation metrics: participation rates, skill development tracking, community feedback sentiment, sustainability impact measurements, and geographic reach data. The dashboard includes interactive charts, progress indicators, and qualitative feedback snippets. Clean data visualization style with clear metrics and actionable insights."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Governance & Roles</h2>
-      <ul class="list">
-        <li><strong>Executive Leadership:</strong> Jessica Ballard Thiessen (program vision & partnerships)</li>
-        <li><strong>Operations:</strong> Afrika Vedela (logistics, vendor relations, volunteer ops)</li>
-        <li><strong>Community & Events:</strong> Reco Bembry (engagement, stages, showcases)</li>
-        <li><strong>Grants & Compliance:</strong> Crystal Bell (funding, reporting, fiscal sponsor liaison)</li>
-      </ul>
-      
-      <!-- Team Leadership Image -->
-      <div class="team-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(245,158,11,.05); border: 2px dashed rgba(245,158,11,.3); border-radius: 12px;">
-        <img src="image10.png" alt="A professional team portrait showing the four key leaders: Jessica Ballard Thiessen (Executive Director), Afrika Vedela (Operations Lead), Reco Bembry (Event Coordinator), and Crystal Bell (Grants & Partnerships Lead). Each person is shown in their element - Jessica with community partners, Afrika managing logistics, Reco coordinating events, Crystal with grant documents. Diverse, professional, collaborative atmosphere." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>TEAM LEADERSHIP PROMPT:</strong><br/>
-          "A professional team portrait showing the four key leaders: Jessica Ballard Thiessen (Executive Director), Afrika Vedela (Operations Lead), Reco Bembry (Event Coordinator), and Crystal Bell (Grants & Partnerships Lead). Each person is shown in their element - Jessica with community partners, Afrika managing logistics, Reco coordinating events, Crystal with grant documents. Diverse, professional, collaborative atmosphere."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>4Culture Launch Program Requirements</h2>
-      <div class="callout" style="background: linear-gradient(90deg, rgba(245,158,11,.14), rgba(251,113,133,.10)); border-color: rgba(245,158,11,.45); color: #fef3c7;">
-        <strong>URGENT ACTION REQUIRED:</strong> Profile completion deadline: August 14, 2025 at 12pm PT<br/>
-        <strong>Contact:</strong> Casey (4Culture Staff) • <strong>Status:</strong> Pending eligibility confirmation
-      </div>
-      
-      <h3>Required Profile Information</h3>
-      <p>The following information must be added to your 4Culture account profile at <a href="https://apply.4culture.org/" target="_blank">https://apply.4culture.org/</a>:</p>
-      
-      <table class="table">
-        <thead><tr><th>Field</th><th>Required Information</th><th>Sunrise Fairs Response</th><th>Status</th></tr></thead>
-        <tbody>
-          <tr>
-            <td><strong>Mission Statement</strong></td>
-            <td>Brief description of purpose, who served, and how</td>
-            <td>"Sunrise Fairs produces free or low-cost, solar-powered pop-up fairs to teach sustainability and STEAM education, intentionally centering youth arts education and community resilience. We serve underserved families and schools in King County who face cost, transportation, or opportunity barriers to STEAM and cultural learning through interactive workshops, art-making, green-tech demonstrations, and local marketplace opportunities."</td>
-            <td><span class="badge" style="background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.35); color: #fef3c7;">Pending</span></td>
-          </tr>
-          <tr>
-            <td><strong>Federal EIN</strong></td>
-            <td>Organization's IRS identification number</td>
-            <td>Use Key Tech Labs' EIN (fiscal sponsor) • If unavailable: "n/a"</td>
-            <td><span class="badge" style="background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.35); color: #fef3c7;">To Obtain</span></td>
-          </tr>
-          <tr>
-            <td><strong>WA State UBI</strong></td>
-            <td>Washington State business identifier</td>
-            <td>"n/a" (specific to Sunrise Fairs group, not fiscal sponsor)</td>
-            <td><span class="badge" style="background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.35); color: #c5f6e6;">Ready</span></td>
-          </tr>
-          <tr>
-            <td><strong>King County %</strong></td>
-            <td>Percentage of programming in King County</td>
-            <td>100% (all programming in King County, starting Auburn March 2026)</td>
-            <td><span class="badge" style="background: rgba(52,211,153,.12); border-color: rgba(52,211,153,.35); color: #c5f6e6;">Ready</span></td>
-          </tr>
-          <tr>
-            <td><strong>Primary Address</strong></td>
-            <td>Physical address (not PO Box)</td>
-            <td>Options: Key Tech Labs address, venue address, or team member address (temporary)</td>
-            <td><span class="badge" style="background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.35); color: #fef3c7;">To Determine</span></td>
-          </tr>
-        </tbody>
-      </table>
-      
-      <h3>Immediate Action Plan</h3>
-      <div class="two-col">
-        <div>
-          <h4>Today's Tasks:</h4>
-          <ul class="list">
-            <li>[ ] Create/login to 4Culture account</li>
-            <li>[ ] Contact Key Tech Labs for EIN</li>
-            <li>[ ] Determine primary physical address</li>
-            <li>[ ] Complete profile information</li>
-            <li>[ ] Submit confirmation to Casey</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Risk Mitigation:</h4>
-          <ul class="list">
-            <li><strong>EIN Challenge:</strong> Use "n/a" if fiscal sponsor EIN unavailable</li>
-            <li><strong>Address Challenge:</strong> Use team member address temporarily</li>
-            <li><strong>Deadline Missed:</strong> Contact Casey immediately for extension</li>
-          </ul>
-        </div>
-      </div>
-      
-      <h3>Strategic Considerations</h3>
-      <ul class="list">
-        <li><strong>Fiscal Sponsor Coordination:</strong> Immediate contact with Key Tech Labs for EIN and address options</li>
-        <li><strong>Mission Optimization:</strong> Emphasizes King County focus, underserved populations, and specific program elements</li>
-        <li><strong>Professional Presentation:</strong> Maintain professional appearance while meeting requirements</li>
-        <li><strong>Future Planning:</strong> Plan for dedicated space and formal incorporation as organization grows</li>
-      </ul>
-      
-      <!-- 4Culture Profile Completion Image -->
-      <div class="4culture-image" style="margin-top: 20px; text-align: center; padding: 16px; background: rgba(245,158,11,.05); border: 2px dashed rgba(245,158,11,.3); border-radius: 12px;">
-        <img src="image11.png" alt="A professional 4Culture application interface showing profile completion progress: mission statement, EIN, UBI, King County percentage, and primary address fields all properly filled out. The interface shows a clean, organized application with clear status indicators and completion checkmarks. Modern web application style with professional grant application aesthetics." style="width: 100%; max-width: 600px; height: auto; border-radius: 8px; margin-bottom: 8px;">
-        <p style="color: var(--muted); font-size: 0.85rem; margin: 0;">
-          <strong>4CULTURE PROFILE COMPLETION PROMPT:</strong><br/>
-          "A professional 4Culture application interface showing profile completion progress: mission statement, EIN, UBI, King County percentage, and primary address fields all properly filled out. The interface shows a clean, organized application with clear status indicators and completion checkmarks. Modern web application style with professional grant application aesthetics."
-        </p>
-      </div>
-    </article>
-
-    <article class="card">
-      <h2>Submission Checklist</h2>
-      <ul class="list">
-        <li>Contact updated to <strong>Crystal Bell</strong> — <a href="mailto:ctbell2017@gmail.com">ctbell2017@gmail.com</a></li>
-        <li>Budget language corrected to <strong>$180k over 3 years ($60k/yr)</strong></li>
-        <li>Program description includes <strong>STEAM</strong>, <strong>arts education for youth</strong>, and <strong>resilience</strong></li>
-        <li>Typos fixed: “incorporated” and “King County”</li>
-        <li>4Culture alignment and public benefits explicitly stated</li>
-        <li>Evaluation plan, equity commitments, and risk mitigation included</li>
-        <li><strong>NEW:</strong> 4Culture Launch program profile requirements addressed</li>
-        <li><strong>NEW:</strong> Immediate action plan for August 14 deadline</li>
-        <li><strong>NEW:</strong> Mission statement optimized for 4Culture requirements</li>
-        <li><strong>NEW:</strong> EIN and address strategy defined</li>
-        <li><strong>NEW:</strong> Risk mitigation plans for profile completion</li>
-      </ul>
-    </article>
-
-    <p class="footer">Prepared for funding submission — Sunrise Fairs • © 2025</p>
-  </main>
+        // Initialize when DOM is ready
+        function init() {
+            setupNavigation();
+            setupAnalytics();
+        }
+        
+        // Navigation functionality
+        function setupNavigation() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (navToggle && navMenu) {
+                navToggle.addEventListener('click', () => {
+                    navMenu.classList.toggle('active');
+                });
+            }
+            
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.navbar')) {
+                    navMenu?.classList.remove('active');
+                }
+            });
+        }
+        
+        // Analytics
+        function setupAnalytics() {
+            trackPageView();
+        }
+        
+        function trackPageView() {
+            const pageData = {
+                page: window.location.pathname,
+                title: document.title,
+                timestamp: Date.now(),
+                userAgent: navigator.userAgent
+            };
+            
+            console.log('Page view tracked:', pageData);
+        }
+        
+        // Performance monitoring
+        function measurePerformance() {
+            if ('performance' in window) {
+                const perfData = performance.getEntriesByType('navigation')[0];
+                const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+                
+                console.log(`Page load time: ${loadTime}ms`);
+                
+                if (loadTime > 3000) {
+                    console.warn('Slow page load detected');
+                }
+            }
+        }
+        
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+        
+        // Track page view after initialization
+        window.addEventListener('load', () => {
+            trackPageView();
+            measurePerformance();
+        });
+        
+    })();
+    </script>
 </body>
 </html>
